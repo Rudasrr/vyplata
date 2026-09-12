@@ -18,7 +18,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-body{font-family:var(--font);background:var(--bg);color:var(--ink);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;font-feature-settings:"tnum" 1}
+body{font-family:var(--font);background:var(--bg);background-image:radial-gradient(1200px 600px at 10% -10%,#FFF1F4 0%,transparent 60%),radial-gradient(900px 500px at 100% 0%,#E9F0FF 0%,transparent 55%);background-attachment:fixed;color:var(--ink);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;font-feature-settings:"tnum" 1}
 button,input,select{font:inherit;color:inherit}
 button{cursor:pointer;border:0;background:none}
 input,select{border:1px solid var(--line);background:#fff;border-radius:var(--r-s);padding:12px 14px;width:100%;outline:none;transition:border-color .15s}
@@ -36,11 +36,11 @@ h2{font-size:15px;font-weight:700;color:var(--ink-2);margin-bottom:10px}
 .top{display:flex;align-items:baseline;justify-content:space-between;margin:6px 0 18px}
 .top .date{color:var(--ink-2);font-weight:600}
 
-.card{background:var(--card);border-radius:var(--r);padding:18px;margin-bottom:14px;border:1px solid var(--line)}
+.card{background:var(--card);border-radius:var(--r);padding:18px;margin-bottom:14px;border:1px solid rgba(230,233,240,.9);box-shadow:0 1px 2px rgba(27,34,51,.04),0 10px 30px -18px rgba(27,34,51,.25)}
 .card.flat{background:transparent;border:0;padding:0}
 
 /* thermometer */
-.thermo{padding:20px 18px 16px}
+.thermo{padding:20px 18px 16px;background:linear-gradient(145deg,#FFFFFF 0%,#F3F7FF 60%,#EAF1FF 100%);border-color:#DCE6FA;box-shadow:0 1px 2px rgba(27,34,51,.04),0 16px 34px -20px rgba(47,111,237,.35)}
 .thermo .pay{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 .thermo .pay .val{font-size:44px;font-weight:800;letter-spacing:-.03em;line-height:1}
 .thermo .pay .lbl{color:var(--ink-2);font-weight:600}
@@ -62,7 +62,9 @@ h2{font-size:15px;font-weight:700;color:var(--ink-2);margin-bottom:10px}
 
 /* stats grid */
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 12px 12px;min-width:0}
+.stat{background:var(--card);border:1px solid rgba(230,233,240,.9);border-radius:var(--r);padding:14px 12px 12px;min-width:0;box-shadow:0 1px 2px rgba(27,34,51,.04),0 10px 30px -18px rgba(27,34,51,.25);position:relative;overflow:hidden}
+.stat::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--t1);opacity:.9}
+#s-month::before{background:var(--t2)}#s-bal::before{background:var(--t3)}.stat.neg::before{background:var(--danger)}
 .stat .k{font-size:12.5px;color:var(--ink-2);font-weight:600;margin-bottom:6px}
 .stat .v{font-size:17px;font-weight:800;letter-spacing:-.02em;line-height:1.15;word-break:break-word}
 .stat .s{font-size:12px;color:var(--ink-3);margin-top:5px}
@@ -80,7 +82,7 @@ h2{font-size:15px;font-weight:700;color:var(--ink-2);margin-bottom:10px}
 .flexi .f .k{font-size:12.5px;color:var(--ink-2);font-weight:600}
 .flexi .f .v{font-weight:800;font-size:16px;margin-top:3px}
 .flexi .f .s{font-size:12.5px;color:var(--ink-2);margin-top:3px}
-.flexi .f.on{background:var(--t2-soft)}.flexi .f.on .v{color:#157A4E}
+.flexi .f.on{background:linear-gradient(135deg,#E3F5EC,#F2FBF6)}.flexi .f.on .v{color:#157A4E}
 
 /* path to tiers */
 .path .row{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
@@ -94,7 +96,7 @@ h2{font-size:15px;font-weight:700;color:var(--ink-2);margin-bottom:10px}
 .path .row.done{opacity:.55}
 .path .row.next{background:linear-gradient(90deg,transparent,var(--t1-soft) 30%,transparent);margin:0 -18px;padding-left:18px;padding-right:18px;border-top-color:transparent}
 .path .row.next+.row{border-top-color:transparent}
-.jump{margin-top:12px;padding:12px 14px;border-radius:var(--r-s);background:var(--t3-soft);font-weight:600;color:#7A5804}
+.jump{margin-top:12px;padding:12px 14px;border-radius:var(--r-s);background:linear-gradient(135deg,#FBF1D6,#FFF8E6);font-weight:600;color:#7A5804}
 .jump b{font-weight:800}
 
 svg.chart{width:100%;height:auto;display:block;overflow:visible}
@@ -105,7 +107,7 @@ svg.chart{width:100%;height:auto;display:block;overflow:visible}
 .form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .form .full{grid-column:1/-1}
 label.fld{display:block;font-size:12.5px;font-weight:600;color:var(--ink-2);margin-bottom:5px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;border-radius:var(--r-s);font-weight:700;background:var(--ink);color:#fff;transition:transform .05s,opacity .15s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;border-radius:var(--r-s);font-weight:700;background:var(--t1);color:#fff;transition:transform .05s,opacity .15s;box-shadow:0 6px 16px -8px rgba(47,111,237,.6)}
 .btn:active{transform:scale(.98)}
 .btn.ghost{background:var(--t0-soft);color:var(--ink)}
 .btn.soft{background:var(--t1-soft);color:var(--t1)}
@@ -140,7 +142,7 @@ label.fld{display:block;font-size:12.5px;font-weight:600;color:var(--ink-2);marg
 .cal .d .m{font-size:9px;font-weight:800;color:#9A6F06;margin-top:2px}
 .cal .d .fx{position:absolute;top:0;left:22%;right:22%;height:3px;border-radius:0 0 3px 3px;background:var(--t2)}
 .cal .d.empty{visibility:hidden}
-.cal-help{margin-top:12px;font-size:13px;color:var(--ink-2);line-height:1.5}.cal-help p{margin-top:8px}.cal-help b{color:var(--ink)}
+.cal-help{margin-top:0;font-size:13px;color:var(--ink-2);line-height:1.5}.cal-help p{margin-top:8px}.cal-help b{color:var(--ink)}
 .cal-legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);margin-top:10px}
 
 .months .m{display:grid;grid-template-columns:1fr auto auto;gap:10px;padding:11px 0;border-top:1px solid var(--line);align-items:center}
@@ -162,7 +164,8 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
 .tabbar .in{max-width:680px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
 .tab{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;font-size:11.5px;font-weight:700;color:var(--ink-3);border-radius:10px}
 .tab svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.tab.active{color:var(--ink)}
+.tab.active{color:var(--ink);background:var(--t0-soft)}
+.tab{margin:0 4px}
 .tab.pause.running{color:var(--t1)}
 
 /* pause sheet */
@@ -196,7 +199,9 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
 .todayorders .to .n{color:var(--ink-2);font-weight:400;margin-left:6px}
 .todayorders .none{padding:10px 0 2px;font-size:13px;color:var(--ink-3)}
 .todayorders .more{display:block;padding:8px 0 0;font-size:13px;color:var(--t1);font-weight:700;text-decoration:none}
-.coach{background:linear-gradient(135deg,#FFF7F9,#F3F6FF);border-color:#F1E4EA;padding:16px 18px}
+.loginhint{background:var(--t3-soft);color:#7A5804;border-radius:var(--r-s);padding:10px 14px;font-size:13.5px;font-weight:600;margin-bottom:12px}.loginhint a{color:#7A5804;text-decoration:underline}
+.coach{background:linear-gradient(135deg,#FFF3F6 0%,#FFF9F3 50%,#F1F5FF 100%);border-color:#F6E6EC;padding:16px 18px;position:relative;overflow:hidden}
+.coach::after{content:"✨";position:absolute;right:14px;top:10px;font-size:22px;opacity:.55}
 .coach .l1{font-weight:800;font-size:16px;line-height:1.3}
 .coach .l2{margin-top:6px;color:var(--ink-2);font-size:14px}
 .coach .l2 b{color:var(--ink)}
@@ -211,34 +216,55 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
 .rem-row{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;margin-bottom:8px}
 .rem-row input[type=time]{width:110px}
 .rem-row input[type=checkbox]{width:20px;height:20px}
-@media (min-width:900px){
-  #app{max-width:1180px;padding-top:10px}
-  .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
-  .thermo .pay .val{font-size:40px}
-  .card{margin-bottom:12px}.grid3{margin-bottom:12px}
-  .path .row{padding:9px 0}
-  .top{margin-bottom:12px}
-}
-@media (min-width:900px) and (max-width:1199px){ .col3{grid-column:1/-1} .col3 .card{display:inline-block;width:calc(50% - 8px);vertical-align:top} .col3 .card+.card{margin-left:12px} }
-@media (min-width:1200px){
-  #app{max-width:1480px}
-  .cols{grid-template-columns:1fr 1fr 1fr}
+.dash{display:flex;flex-direction:column}
+.a-coach{order:1}.a-quick{order:2}.a-thermo{order:3}.a-stats{order:4}.a-day{order:5}.a-path{order:6}.a-trend{order:7}.a-bars{order:8}
+.mdash{display:flex;flex-direction:column}
+.m-cal{order:1}.m-stats{order:2}.m-sum{order:3}.m-hist{order:4}.m-help{order:5}
+.narrow{max-width:720px;margin:0 auto}
+@media (min-width:1100px){
+  #app{max-width:1500px;padding:14px 22px 24px}
+  .tabbar{position:absolute;top:14px;right:22px;left:auto;bottom:auto;background:transparent;border:0;padding:0;backdrop-filter:none}
+  .tabbar .in{display:flex;gap:4px}
+  .tab{flex-direction:row;gap:8px;padding:8px 14px;font-size:13.5px;border-radius:999px}
+  .tab.active{background:#fff;box-shadow:0 1px 2px rgba(27,34,51,.06),0 8px 20px -12px rgba(27,34,51,.3)}
+  .top{margin:6px 0 14px}
+  .card,.grid3{margin-bottom:0}
+  .dash{display:grid;gap:14px;grid-template-columns:1.05fr 1fr 1.05fr;grid-template-rows:auto auto auto;
+    grid-template-areas:"coach quick day" "thermo stats day" "path trend bars";align-items:stretch}
+  .a-coach{grid-area:coach}.a-quick{grid-area:quick}.a-thermo{grid-area:thermo}.a-stats{grid-area:stats;align-content:stretch}
+  .a-stats .stat{display:flex;flex-direction:column;justify-content:center}.a-stats .stat .v{font-size:24px}
+  .a-day{display:flex;flex-direction:column}.a-day .flexi{margin-top:auto!important}.a-day .todayorders{margin-bottom:12px}
+  .a-trend,.a-bars{display:flex;flex-direction:column}.a-trend #t-chart,.a-bars #t-bars{flex:1;display:flex;align-items:center}.a-trend svg,.a-bars svg{width:100%}.a-day{grid-area:day}.a-path{grid-area:path}.a-trend{grid-area:trend}.a-bars{grid-area:bars}
+  .a-quick{display:flex;flex-direction:column;justify-content:center}
+  .thermo .pay .val{font-size:44px}
+  .path .row{padding:8px 0}
+  .grid3{grid-template-columns:repeat(3,1fr)}
+  .mdash{display:grid;gap:14px;grid-template-columns:minmax(420px,520px) 1fr;grid-template-rows:auto 1fr auto;grid-template-areas:"cal stats" "cal sum" "help hist";align-items:start}
+  .m-cal{grid-area:cal}.m-stats{grid-area:stats}.m-sum{grid-area:sum}.m-hist{grid-area:hist}.m-help{grid-area:help}
+  #v-orders,#v-settings{max-width:760px;margin:0 auto}
 }
 @media (min-width:560px){.grid3 .stat .v{font-size:21px}.thermo .pay .val{font-size:52px}}
 </style>
 </head>
 <body>
+<nav class="tabbar"><div class="in">
+  <button class="tab active" data-v="today" onclick="go('today')"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Dnes</button>
+  <button class="tab" data-v="orders" onclick="go('orders')"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Objednávky</button>
+  <button class="tab pause" id="tab-pause" onclick="openPause()"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg><span id="tab-pause-l">Pauza</span></button>
+  <button class="tab" data-v="month" onclick="go('month')"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Měsíc</button>
+  <button class="tab" data-v="settings" onclick="go('settings')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2-1.2L14.2 3H9.8l-.4 2.6a7 7 0 0 0-2 1.2l-2.3-1-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2 1.2l.4 2.6h4.4l.4-2.6a7 7 0 0 0 2-1.2l2.3 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg>Nastavení</button>
+</div></nav>
 <div id="app">
 
 <!-- ===== DNES ===== -->
 <section class="view active" id="v-today">
   <div class="top"><div><h1 id="t-greet">Dobrý den</h1><div class="date" id="t-date"></div></div><div class="flexi-badge" id="t-flexibadge"></div></div>
+  <div class="loginhint" id="loginhint" style="display:none">Nejsi přihlášená – objednávky se ukládají jen v tomto prohlížeči. <a href="#" onclick="go('settings');return false">Přihlásit se</a></div>
 
-  <div class="cols">
-  <div class="col col1">
-    <div class="card coach" id="t-coach"></div>
+  <div class="dash">
+    <div class="card coach a-coach" id="t-coach"></div>
 
-    <div class="card quick">
+    <div class="card quick a-quick">
       <div class="qrow">
         <input id="q-ico" inputmode="numeric" list="ico-list" placeholder="IČO" maxlength="12" autocomplete="off">
         <input id="q-amount" inputmode="decimal" placeholder="Kč">
@@ -247,7 +273,7 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
       <div class="qsub"><span class="faint small">Datum dnes · pro jiný den nebo poznámku použij <a href="#" onclick="go('orders');return false">Objednávky</a></span></div>
     </div>
 
-    <div class="card thermo">
+    <div class="card thermo a-thermo">
       <div class="pay"><span class="val num" id="t-pay">0 Kč</span><span class="lbl">výplata podle aktuálního plnění</span></div>
       <div class="sub" id="t-paysub"></div>
       <div class="track">
@@ -260,15 +286,14 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
         <span class="small muted num" id="t-monthsum"></span>
       </div>
     </div>
-  </div>
-  <div class="col col2">
-    <div class="grid3">
+
+    <div class="grid3 a-stats">
       <div class="stat" id="s-day"><div class="k">Dnešní obrat</div><div class="v num" id="s-day-v">0 Kč</div><div class="s num" id="s-day-s"></div></div>
       <div class="stat" id="s-month"><div class="k">Plnění měsíce</div><div class="v num" id="s-month-v">0 %</div><div class="s num" id="s-month-s"></div></div>
       <div class="stat" id="s-bal"><div class="k">Proti plánu</div><div class="v num" id="s-bal-v">0 Kč</div><div class="s num" id="s-bal-s"></div></div>
     </div>
 
-    <div class="card">
+    <div class="card a-day">
       <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><h2 style="margin:0">Dnešní den</h2><span class="small num" id="d-head"></span></div>
       <div class="small muted num" id="d-pct" style="margin-top:2px"></div>
       <div class="bar"><i id="d-fill"></i><em style="left:76.9%" title="100 %"></em><em class="gold" style="left:100%;transform:translateX(-2px)" title="130 %"></em></div>
@@ -279,25 +304,24 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
         <div class="f" id="fx-tomorrow"><div class="k" id="fx-tomorrow-k">Flexi příště</div><div class="v">—</div><div class="s"></div></div>
       </div>
     </div>
-    <div class="card path">
+
+    <div class="card path a-path">
       <h2>Cesta k vyšší provizi</h2>
       <div id="t-path"></div>
       <div class="jump" id="t-jump" style="display:none"></div>
     </div>
-  </div>
-  <div class="col col3">
-    <div class="card">
+
+    <div class="card a-trend">
       <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap"><h2 style="margin:0">Trend měsíce</h2><span class="small muted num" id="t-forecast"></span></div>
       <div id="t-chart" style="margin-top:12px"></div>
       <div class="legend"><span><i style="background:var(--ink)"></i>obrat</span><span><i style="background:var(--ink-3)"></i>plán</span><span><i style="background:var(--t1);opacity:.6"></i>odhad</span><span><i style="background:var(--t2);opacity:.5"></i>minulý měsíc</span></div>
     </div>
 
-    <div class="card">
+    <div class="card a-bars">
       <h2>Dny</h2>
       <div id="t-bars"></div>
       <div class="legend"><span><i style="background:var(--ink-3)"></i>100 %</span><span><i style="background:var(--t3)"></i>130 % = flexi</span><span id="t-streak" class="num"></span></div>
     </div>
-  </div>
   </div>
 </section>
 
@@ -317,25 +341,29 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
       </div>
     </div>
   </div>
-  <div class="filter"><input id="o-filter" placeholder="Hledat IČO, částku, poznámku" oninput="render()"><select id="o-range" onchange="render()" style="width:auto"><option value="month">Tento měsíc</option><option value="all">Vše</option></select></div>
+  <div class="filter"><input id="o-filter" placeholder="Hledat IČO, částku, poznámku" oninput="render()"><select id="o-range" onchange="render()" style="width:auto"><option value="month">Tento měsíc</option><option value="all">Vše</option></select><button class="btn soft sm" onclick="exportXLSX(document.getElementById('o-range').value)" title="Uložit do Excelu">Excel</button></div>
   <div class="olist" id="o-list"></div>
 </section>
 
 <!-- ===== MĔSÍC ===== -->
 <section class="view" id="v-month">
   <div class="top"><h1>Měsíc</h1></div>
-  <div class="card">
+  <div class="mdash">
+  <div class="card m-cal">
     <div class="cal-head"><button class="btn ghost sm" onclick="shiftMonth(-1)">‹</button><b id="c-title"></b><button class="btn ghost sm" onclick="shiftMonth(1)">›</button></div>
     <div class="cal" id="c-grid"></div>
+  </div>
+  <div class="grid3 m-stats" id="c-stats"></div>
+  <div class="card m-help"><h2>Jak kalendář funguje</h2>
     <div class="cal-help">
       <p><b>Co vidíš:</b> každý odpracovaný den má procento plnění (modře pod 100 %, zeleně nad 100 %, zlatě nad 130 %). Zelený proužek nad dnem = ten den má nárok na flexi, protože předchozí pracovní den byl ≥ 130 % (pátek ⇒ pondělí). Šedé dny jsou svátky a víkendy, ty se do cíle nepočítají.</p>
-      <p><b>Co nastavuješ:</b> klepnutím na pracovní den ho označíš jako volno. Každé další klepnutí přepne: <b>DOV</b> dovolená → <b>NEM</b> nemoc → <b>VOL</b> jiné volno (lékař, náhradní volno) → zpět na pracovní den. Označený den se odečte z počtu pracovních dní, a tím klesne měsíční cíl o 8 000 Kč. Změny se hned promítnou na obrazovce Dnes.</p>
+      <p><b>Co nastavuješ:</b> klepnutím na pracovní den ho označíš jako <b>VOL</b> – volno (dovolená, lékař, náhradní volno). Druhé klepnutí volno zruší. Den s volnem se odečte z počtu pracovních dní, a tím klesne měsíční cíl o 8 000 Kč. Změny se hned promítnou na obrazovce Dnes.</p>
       <p><b>Kdy to udělat:</b> ideálně hned, jak víš o dovolené – i pro příští měsíce (šipky nahoře). Cíl pak celý měsíc sedí a kouč počítá správné tempo.</p>
     </div>
   </div>
-  <div class="grid3" id="c-stats"></div>
-  <div class="card"><h2>Kde jsi skončil</h2><div id="c-sum"></div></div>
-  <div class="card months"><h2>Historie měsíců</h2><div id="c-months"></div></div>
+  <div class="card m-sum"><h2>Kde jsi teď</h2><div id="c-sum"></div></div>
+  <div class="card months m-hist"><h2>Historie měsíců</h2><div id="c-months"></div></div>
+  </div>
 </section>
 
 <!-- ===== NASTAVENÍ ===== -->
@@ -364,38 +392,40 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
     <h2>Cloud (Supabase)</h2>
     <div class="status" id="cl-status"><i class="dot"></i><span>Cloud není nastaven. Data jsou jen v tomto prohlížeči.</span></div>
     <div style="display:grid;gap:10px">
-      <div><label class="fld">Project URL</label><input id="cl-url" placeholder="https://xxxx.supabase.co"></div>
-      <div><label class="fld">Anon public key</label><input id="cl-key" placeholder="eyJ..."></div>
-      <div><label class="fld">E-mail pro přihlášení</label><input id="cl-email" type="email" placeholder="ty@email.cz"></div>
+      <div id="cl-advanced" style="display:grid;gap:10px">
+        <div><label class="fld">Project URL</label><input id="cl-url" placeholder="https://xxxx.supabase.co"></div>
+        <div><label class="fld">Klíč (publishable / anon)</label><input id="cl-key" placeholder="sb_publishable_… nebo eyJ…"></div>
+      </div>
+      <div class="row" style="margin:0">
+        <div><label class="fld">E-mail</label><input id="cl-email" type="email" placeholder="miruska@email.cz" autocomplete="username"></div>
+        <div><label class="fld">Heslo</label><input id="cl-pass" type="password" placeholder="••••••••" autocomplete="current-password"></div>
+      </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn" onclick="cloudConnect()">Uložit a přihlásit</button>
+        <button class="btn" id="cl-login" onclick="cloudLogin()">Přihlásit</button>
+        <button class="btn ghost" onclick="cloudForgot()">Zapomenuté heslo</button>
         <button class="btn soft" onclick="syncAll(true)">Synchronizovat teď</button>
         <button class="btn ghost" onclick="cloudLogout()">Odhlásit</button>
       </div>
     </div>
-    <details><summary>Jak to funguje</summary><p class="small muted" style="margin-top:8px">Aplikace zapisuje každou změnu nejdřív do tohoto prohlížeče a hned potom do cloudu. Bez internetu pracuje dál a doplní změny po připojení. Na jiném zařízení otevři stejnou adresu, zadej stejné údaje a přihlas se stejným e-mailem – data se stáhnou. Postup nastavení je v souboru README.</p></details>
+    <details><summary>Jak to funguje</summary><p class="small muted" style="margin-top:8px">Aplikace zapisuje každou změnu nejdřív do tohoto prohlížeče a hned potom do cloudu. Bez internetu pracuje dál a doplní změny po připojení. Na jiném zařízení otevři stejnou adresu a přihlas se stejným e-mailem a heslem – data se stáhnou. Přihlášení zůstává uložené, dokud se neodhlásíš.</p></details>
   </div>
 
   <div class="card">
     <h2>Záloha</h2>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn" onclick="exportXLSX('all')">Excel – všechny objednávky</button>
       <button class="btn soft" onclick="exportJSON()">Exportovat JSON</button>
       <label class="btn ghost" style="cursor:pointer">Importovat JSON<input type="file" accept="application/json" style="display:none" onchange="importJSON(this)"></label>
     </div>
     <p class="small muted" style="margin-top:10px" id="bk-info"></p>
+    <p class="small faint">Excel obsahuje listy Objednávky, Dny a Měsíce. Slouží k prohlížení a tisku; do aplikace se data vrací jen přes JSON.</p>
     <details><summary>Nebezpečná zóna</summary><button class="btn danger sm" style="margin-top:10px" onclick="wipe()">Smazat všechna lokální data</button></details>
   </div>
 </section>
 
 </div>
 
-<nav class="tabbar"><div class="in">
-  <button class="tab active" data-v="today" onclick="go('today')"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Dnes</button>
-  <button class="tab" data-v="orders" onclick="go('orders')"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Objednávky</button>
-  <button class="tab pause" id="tab-pause" onclick="openPause()"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg><span id="tab-pause-l">Pauza</span></button>
-  <button class="tab" data-v="month" onclick="go('month')"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Měsíc</button>
-  <button class="tab" data-v="settings" onclick="go('settings')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2-1.2L14.2 3H9.8l-.4 2.6a7 7 0 0 0-2 1.2l-2.3-1-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2 1.2l.4 2.6h4.4l.4-2.6a7 7 0 0 0 2-1.2l2.3 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg>Nastavení</button>
-</div></nav>
+
 
 <div class="sheet-bg" id="sheet" onclick="if(event.target===this)closePause()">
   <div class="sheet">
@@ -416,6 +446,13 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
 <div class="toast" id="toast"><span id="toast-t"></span><button id="toast-b" style="display:none"></button></div>
 
 <script>
+/* ================= NASTAVENÍ CLOUDU – VYPLŇ PŘED NAHRÁNÍM NA GITHUB =================
+   Project URL a publishable/anon klíč ze Supabase (Project Settings → API Keys).
+   Klíč je určený pro prohlížeč; data chrání pravidla RLS. Nikdy sem nedávej service_role / sb_secret. */
+const CLOUD_CONFIG = {
+  url: 'https://lswgqpozlmuxvvenxopd.supabase.co',
+  key: 'sb_publishable_PtNto6lTGT_AXVXXFNtf9g_vUurjXnj'
+};
 /* ================= STATE ================= */
 const LS = {settings:'vp.settings', orders:'vp.orders', days:'vp.days', cloud:'vp.cloud', pending:'vp.pending', lastPull:'vp.lastPull', pause:'vp.pause', meta:'vp.meta'};
 const DEF_SETTINGS = {base:21875, daily:8000, flexiPct:130, tiers:[{min:90,rate:7},{min:100,rate:11},{min:136,rate:15}], name:'Miruško',
@@ -424,7 +461,7 @@ let settings = load(LS.settings, DEF_SETTINGS);
 settings = Object.assign({}, DEF_SETTINGS, settings); if(!Array.isArray(settings.reminders)) settings.reminders = DEF_SETTINGS.reminders.map(r=>({...r}));
 let orders = load(LS.orders, []);      // {id,date,ico,amount,note,deleted,updated_at}
 let days   = load(LS.days, []);        // {id,date,kind,deleted,updated_at}
-let cloud  = load(LS.cloud, {url:'',key:'',email:''});
+let cloud  = load(LS.cloud, {url:'',key:'',email:''}); if(CLOUD_CONFIG.url&&CLOUD_CONFIG.key){cloud.url=CLOUD_CONFIG.url;cloud.key=CLOUD_CONFIG.key}
 let pending= load(LS.pending, []);     // [{table,row}]
 let meta   = load(LS.meta, {lastExport:null});
 let viewMonth = null;
@@ -533,7 +570,7 @@ function renderToday(){
   document.getElementById('d-fill').style.width=Math.min(dayRev/flexiT,1)*100+'%';
   document.getElementById('d-fill').style.background=dayPct>=settings.flexiPct?'var(--t3)':(dayPct>=100?'var(--t2)':'var(--t1)');
   document.getElementById('d-pct').textContent=dayRev>=flexiT?`${fmtP(dayPct)} – flexi ${nextFlexiWord()} splněno`:`do 100 % zbývá ${fmtK(Math.max(0,settings.daily-dayRev))} · do ${settings.flexiPct} % ${fmtK(Math.max(0,flexiT-dayRev))}`;
-  document.getElementById('d-head').innerHTML=isWorking(today)?`<b>${fmtK(dayRev)}</b> <span class="muted">z ${fmtK(settings.daily)}</span> · <b style="color:${dayPct>=settings.flexiPct?'var(--t3)':dayPct>=100?'var(--t2)':'inherit'}">${fmtP(dayPct)}</b>`:`<span class="muted">${dayMark(today)?dayMark(today).kind:'víkend / svátek'}</span>`;
+  document.getElementById('d-head').innerHTML=isWorking(today)?`<b>${fmtK(dayRev)}</b> <span class="muted">z ${fmtK(settings.daily)}</span> · <b style="color:${dayPct>=settings.flexiPct?'var(--t3)':dayPct>=100?'var(--t2)':'inherit'}">${fmtP(dayPct)}</b>`:`<span class="muted">${dayMark(today)?'volno':'víkend / svátek'}</span>`;
   {const tod=activeOrders().filter(o=>o.date===today).sort((a,b)=>b.updated_at.localeCompare(a.updated_at));const box=document.getElementById('d-orders');
    box.innerHTML=tod.length?tod.slice(0,6).map(o=>`<div class="to"><span><span class="ico">${o.ico||'bez IČO'}</span>${o.note?`<span class="n">${esc(o.note)}</span>`:''}</span><span class="amt num">${fmtK(o.amount)}</span></div>`).join('')+`<a href="#" class="more" onclick="go('orders');return false">${tod.length>6?`+ ${tod.length-6} dalších · `:''}${tod.length} ${tod.length===1?'objednávka':(tod.length<5?'objednávky':'objednávek')} dnes – upravit</a>`:`<div class="none">Dnes zatím žádná objednávka. První zadej nahoře.</div>`}
   document.getElementById('d-l100').textContent=fmtN(settings.daily); document.getElementById('d-l130').textContent=fmtN(flexiT);
@@ -545,7 +582,7 @@ function renderToday(){
   const nwd=nextWorkingDay(today);
   const nwdName=nwd?WD[fromIso(nwd).getDay()]:'';document.getElementById('fx-tomorrow-k').textContent=nwd?(nwd===addDays(today,1)?'Flexi zítra':`Flexi v ${['neděli','pondělí','úterý','středu','čtvrtek','pátek','sobotu'][fromIso(nwd).getDay()]}`):'Flexi příště';
   if(isWorking(today)){setFlexi('fx-tomorrow',dayPct>=settings.flexiPct,dayPct>=settings.flexiPct?'Nárok splněn 🏠':`chybí ${fmtK(Math.max(0,flexiT-dayRev))}`,nwd?`${nwdName} ${fmtDate(nwd)} – práce z domu`:'')}
-  else{setFlexi('fx-today',false,'Dnes nepracuješ',dayMark(today)?dayMark(today).kind:'víkend / svátek');const pw2=nwd?prevWorkingDay(nwd):null;const r2=pw2?(revenueByDay(pw2.slice(0,7))[pw2]||0):0;const p2=r2/settings.daily*100;setFlexi('fx-tomorrow',p2>=settings.flexiPct,p2>=settings.flexiPct?'Ano, práce z domu 🏠':'Ne',pw2?`${WD[fromIso(pw2).getDay()]} ${fmtDate(pw2)}: ${fmtP(p2)}`:'')}
+  else{setFlexi('fx-today',false,'Dnes nepracuješ',dayMark(today)?'volno':'víkend / svátek');const pw2=nwd?prevWorkingDay(nwd):null;const r2=pw2?(revenueByDay(pw2.slice(0,7))[pw2]||0):0;const p2=r2/settings.daily*100;setFlexi('fx-tomorrow',p2>=settings.flexiPct,p2>=settings.flexiPct?'Ano, práce z domu 🏠':'Ne',pw2?`${WD[fromIso(pw2).getDay()]} ${fmtDate(pw2)}: ${fmtP(p2)}`:'')}
 
   // path
   renderPath(s);
@@ -580,7 +617,7 @@ function streak(s){const today=todayIso();let n=0;const list=s.wd.filter(d=>d<=t
 /* ================= CHARTS (SVG) ================= */
 function chartW(id){const el=document.getElementById(id);return Math.max(300,el&&el.clientWidth?el.clientWidth:340)}
 function cumChart(s){
-  const W=chartW('t-chart'),H=Math.round(W*0.42),L=40,R=12,T=14,B=26; const n=s.wd.length; if(!n)return '<div class="empty">Žádné pracovní dny</div>';
+  const W=chartW('t-chart'),H=Math.round(W*(W>500?0.5:0.42)),L=40,R=12,T=14,B=26; const n=s.wd.length; if(!n)return '<div class="empty">Žádné pracovní dny</div>';
   const today=todayIso(); const maxY=Math.max(s.target*1.4,s.revenue,s.forecast)*1.05;
   const x=i=>L+(i/(Math.max(n-1,1)))*(W-L-R); const y=v=>T+(1-v/maxY)*(H-T-B);
   let cum=0; const pts=[]; s.wd.forEach((d,i)=>{if(d<=today){cum+=s.byDay[d]||0;pts.push([x(i),y(cum)])}});
@@ -595,7 +632,7 @@ function cumChart(s){
   return `<svg class="chart" viewBox="0 0 ${W} ${H}">${tierLines}${plan}${lmp}${area}${fc}${line}${yl}${xl}</svg>`;
 }
 function barChart(s){
-  const W=chartW('t-bars'),H=Math.round(W*0.3),L=8,R=8,T=10,B=22; const n=s.wd.length; if(!n)return '';
+  const W=chartW('t-bars'),H=Math.round(W*(W>500?0.48:0.3)),L=8,R=8,T=10,B=22; const n=s.wd.length; if(!n)return '';
   const flexiT=settings.daily*settings.flexiPct/100; const maxY=Math.max(flexiT*1.15,...s.wd.map(d=>s.byDay[d]||0))*1.05;
   const bw=(W-L-R)/n; const y=v=>T+(1-v/maxY)*(H-T-B); const today=todayIso();
   const bars=s.wd.map((d,i)=>{const r=s.byDay[d]||0;const p=r/settings.daily*100;const c=r>=flexiT?'var(--t3)':p>=100?'var(--t2)':p>0?'var(--t1)':'var(--t0-soft)';const h=Math.max(r>0?2:0,y(0)-y(r));const fut=d>today;return `<rect x="${L+i*bw+bw*0.15}" y="${y(r)}" width="${bw*0.7}" height="${fut?0:h}" rx="3" fill="${c}"/>${fut?`<rect x="${L+i*bw+bw*0.15}" y="${y(0)-2}" width="${bw*0.7}" height="2" fill="var(--line)"/>`:''}${d===today?`<rect x="${L+i*bw+bw*0.15}" y="${H-B+4}" width="${bw*0.7}" height="3" rx="1.5" fill="var(--ink)"/>`:''}`}).join('');
@@ -634,7 +671,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 
 /* ================= MONTH ================= */
 function shiftMonth(n){const [y,m]=viewMonth.split('-').map(Number);viewMonth=ymOf(new Date(y,m-1+n,1));renderMonth()}
-const KINDS=[null,'dovolená','nemoc','jiné volno'];
+const KINDS=[null,'volno'];
 function cycleMark(s){const cur=dayMark(s);const now=new Date().toISOString();if(cur){cur.deleted=true;cur.updated_at=now;queue('day_marks',cur);const i=KINDS.indexOf(cur.kind);if(i<KINDS.length-1){const n={id:uid(),date:s,kind:KINDS[i+1],deleted:false,updated_at:now};days.push(n);queue('day_marks',n)}}else{const n={id:uid(),date:s,kind:KINDS[1],deleted:false,updated_at:now};days.push(n);queue('day_marks',n)}persist();renderMonth();pushPending()}
 function renderMonth(){
   const [y,m]=viewMonth.split('-').map(Number); document.getElementById('c-title').textContent=MONTHS[m-1]+' '+y;
@@ -642,7 +679,7 @@ function renderMonth(){
   let html=['Po','Út','St','Čt','Pá','So','Ne'].map(w=>`<div class="wd">${w}</div>`).join(''); for(let i=0;i<off;i++)html+='<div class="d empty"></div>';
   for(const d of monthDays(viewMonth)){const we=isWeekend(d),ho=isHoliday(d),mk=dayMark(d);const r=s.byDay[d]||0;const p=r/settings.daily*100;let cls='d';if(we)cls+=' off';if(ho)cls+=' hol';if(mk)cls+=' mark';if(d===today)cls+=' today';if(!we&&!ho&&!mk&&d<=today)cls+=' p'+(r>=settings.daily*settings.flexiPct/100?3:p>=100?2:p>0?1:0);
     const pw=prevWorkingDay(d);const fx=!we&&!ho&&!mk&&pw&&(revenueByDay(pw.slice(0,7))[pw]||0)>=settings.daily*settings.flexiPct/100;
-    const inner=`${fromIso(d).getDate()}${mk?`<span class="m">${mk.kind==='dovolená'?'DOV':mk.kind==='nemoc'?'NEM':'VOL'}</span>`:(!we&&!ho&&d<=today&&r>0?`<span class="p num">${Math.round(p)}%</span>`:'')}${fx?'<span class="fx" title="flexi – práce z domu"></span>':''}`;
+    const inner=`${fromIso(d).getDate()}${mk?`<span class="m">VOL</span>`:(!we&&!ho&&d<=today&&r>0?`<span class="p num">${Math.round(p)}%</span>`:'')}${fx?'<span class="fx" title="flexi – práce z domu"></span>':''}`;
     html+=(we||ho)?`<div class="${cls}" title="${ho?(HOLNAMES[d.slice(5)]||'Velikonoce'):''}">${inner}</div>`:`<button class="${cls}" onclick="cycleMark('${d}')">${inner}</button>`}
   document.getElementById('c-grid').innerHTML=html;
   const off_=days.filter(x=>!x.deleted&&x.date.startsWith(viewMonth)).length;
@@ -658,7 +695,7 @@ function renderMonth(){
 function renderSettings(){
   document.getElementById('st-base').value=settings.base;document.getElementById('st-daily').value=settings.daily;document.getElementById('st-flexi').value=settings.flexiPct;document.getElementById('st-name').value=settings.name||'';renderReminders();
   document.getElementById('st-tiers').innerHTML=tiers().map((t,i)=>`<div><label class="fld">Pásmo ${i+1}: od % plnění</label><input id="tm${i}" inputmode="numeric" value="${t.min}"></div><div><label class="fld">provize %</label><input id="tr${i}" inputmode="decimal" value="${t.rate}"></div>`).join('');
-  document.getElementById('cl-url').value=cloud.url||'';document.getElementById('cl-key').value=cloud.key||'';document.getElementById('cl-email').value=cloud.email||'';
+  document.getElementById('cl-url').value=cloud.url||'';document.getElementById('cl-key').value=cloud.key||'';document.getElementById('cl-email').value=cloud.email||'';document.getElementById('cl-advanced').style.display=(CLOUD_CONFIG.url&&CLOUD_CONFIG.key)?'none':'grid';
   document.getElementById('bk-info').textContent=(meta.lastExport?`Poslední export: ${new Date(meta.lastExport).toLocaleString('cs-CZ')}. `:'Ještě jsi neexportoval. ')+`${activeOrders().length} objednávek v paměti.`;
   cloudStatus();
 }
@@ -676,19 +713,65 @@ if(d.settings&&(!settings.updated_at||(d.settings.updated_at||'')>settings.updat
 persist();render();toast(`Import hotov: ${n} objednávek sloučeno`)}catch(e){toast('Soubor se nepodařilo načíst')}inp.value=''};r.readAsText(f)}
 function wipe(){if(!confirm('Smazat všechna data v tomto prohlížeči? Data v cloudu zůstanou.'))return;Object.values(LS).forEach(k=>localStorage.removeItem(k));location.reload()}
 
+/* ================= EXCEL ================= */
+async function loadXLSX(){if(window.XLSX)return true;return new Promise(res=>{const el=document.createElement('script');el.src='https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js';el.onload=()=>res(true);el.onerror=()=>{const f=document.createElement('script');f.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';f.onload=()=>res(true);f.onerror=()=>res(false);document.head.appendChild(f)};document.head.appendChild(el)})}
+function excelDate(iso){const d=fromIso(iso);return new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()))}
+async function exportXLSX(range){
+  toast('Připravuji Excel…');
+  const ym=ymOf(new Date());let list=activeOrders().filter(o=>range==='all'||o.date.startsWith(ym)).sort((a,b)=>a.date.localeCompare(b.date)||a.updated_at.localeCompare(b.updated_at));
+  if(!list.length){toast('Není co exportovat');return}
+  if(!await loadXLSX()){exportCSV(list);return}
+  const wb=XLSX.utils.book_new();
+  // Sheet 1: orders
+  const rows=list.map(o=>({'Datum':excelDate(o.date),'IČO':o.ico||'','Hodnota (Kč)':Number(o.amount),'Poznámka':o.note||'','Měsíc':o.date.slice(0,7)}));
+  const ws=XLSX.utils.json_to_sheet(rows,{cellDates:true});
+  ws['!cols']=[{wch:12},{wch:12},{wch:14},{wch:30},{wch:9}];
+  for(let r=2;r<=rows.length+1;r++){const c=ws['A'+r];if(c){c.t='d';c.z='d.m.yyyy'}const v=ws['C'+r];if(v)v.z='#,##0'}
+  const tot=rows.length+2;ws['A'+tot]={t:'s',v:'Celkem'};ws['C'+tot]={t:'n',f:`SUM(C2:C${rows.length+1})`,z:'#,##0'};ws['!ref']=`A1:E${tot}`;
+  XLSX.utils.book_append_sheet(wb,ws,'Objednávky');
+  // Sheet 2: days
+  const yms=[...new Set(list.map(o=>o.date.slice(0,7)))].sort();const drows=[];
+  for(const m of yms){const st=monthStats(m);for(const d of st.wd){if(d>todayIso())continue;const r=st.byDay[d]||0;const pw=prevWorkingDay(d);const fx=pw?((revenueByDay(pw.slice(0,7))[pw]||0)>=settings.daily*settings.flexiPct/100):false;
+    drows.push({'Datum':excelDate(d),'Den':WD[fromIso(d).getDay()],'Obrat (Kč)':r,'Cíl (Kč)':settings.daily,'Plnění':r/settings.daily,'Flexi nárok':fx?'ano':'','Objednávek':list.filter(o=>o.date===d).length})}}
+  const ws2=XLSX.utils.json_to_sheet(drows,{cellDates:true});ws2['!cols']=[{wch:12},{wch:9},{wch:12},{wch:10},{wch:9},{wch:11},{wch:11}];
+  for(let r=2;r<=drows.length+1;r++){const c=ws2['A'+r];if(c){c.t='d';c.z='d.m.yyyy'}const e=ws2['E'+r];if(e)e.z='0%';['C','D'].forEach(k=>{const v=ws2[k+r];if(v)v.z='#,##0'})}
+  XLSX.utils.book_append_sheet(wb,ws2,'Dny');
+  // Sheet 3: months
+  const mrows=yms.map(m=>{const st=monthStats(m);const [y,mm]=m.split('-').map(Number);return {'Měsíc':`${MONTHS[mm-1]} ${y}`,'Pracovní dny':st.wd.length,'Cíl (Kč)':st.target,'Obrat (Kč)':st.revenue,'Plnění':st.target?st.revenue/st.target:0,'Provize %':st.tier.tier?st.tier.tier.rate/100:0,'Základ (Kč)':settings.base,'Provize (Kč)':st.tier.tier?st.revenue*st.tier.tier.rate/100:0,'Výplata (Kč)':payout(st.revenue,st.pct)}});
+  const ws3=XLSX.utils.json_to_sheet(mrows);ws3['!cols']=[{wch:16},{wch:13},{wch:12},{wch:12},{wch:9},{wch:10},{wch:12},{wch:13},{wch:13}];
+  for(let r=2;r<=mrows.length+1;r++){['E','F'].forEach(k=>{const v=ws3[k+r];if(v)v.z='0.0%'});['C','D','G','H','I'].forEach(k=>{const v=ws3[k+r];if(v)v.z='#,##0'})}
+  XLSX.utils.book_append_sheet(wb,ws3,'Měsíce');
+  const name=`vyplata-objednavky-${range==='all'?'vse':ym}.xlsx`;
+  XLSX.writeFile(wb,name,{compression:true,cellDates:true});
+  meta.lastExport=new Date().toISOString();persist();toast(`Uloženo: ${name}`)}
+function exportCSV(list){const lines=['Datum;IČO;Hodnota;Poznámka',...list.map(o=>`${o.date.split('-').reverse().join('.')};${o.ico||''};${o.amount};${(o.note||'').replace(/;/g,',')}`)];const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`vyplata-objednavky.csv`;a.click();toast('Knihovna Excelu nedostupná – uloženo jako CSV (Excel ho otevře)')}
+
 /* ================= CLOUD (Supabase) ================= */
 function queue(table,row){pending=pending.filter(p=>!(p.table===table&&p.row.id===row.id&&table!=='settings'));pending.push({table,row:JSON.parse(JSON.stringify(row))});save(LS.pending,pending)}
 function cloudStatus(msg,cls){const e=document.getElementById('cl-status');if(msg){e.className='status '+(cls||'');e.querySelector('span').textContent=msg;return}
   if(!cloud.url||!cloud.key){e.className='status';e.querySelector('span').textContent='Cloud není nastaven. Data jsou jen v tomto prohlížeči.'}
-  else if(!sbUser){e.className='status warn';e.querySelector('span').textContent='Cloud nastaven, nejsi přihlášen. Zkontroluj e-mail s odkazem.'}
-  else{e.className='status ok';e.querySelector('span').textContent=`Přihlášen jako ${sbUser.email}. ${pending.length?pending.length+' změn čeká na odeslání.':'Vše synchronizováno.'}`}}
+  else if(!sbUser){e.className='status warn';e.querySelector('span').textContent='Nejsi přihlášená – zadej e-mail a heslo. Data se zatím ukládají jen v tomto prohlížeči.'}
+  else{e.className='status ok';e.querySelector('span').textContent=`Přihlášená jako ${sbUser.email}. ${pending.length?pending.length+' změn čeká na odeslání.':'Vše synchronizováno.'}`}}
 async function loadSb(){if(window.supabase)return true;return new Promise(res=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';s.onload=()=>res(true);s.onerror=()=>res(false);document.head.appendChild(s)})}
 async function initCloud(){if(!cloud.url||!cloud.key)return;if(!await loadSb()){cloudStatus('Knihovnu Supabase se nepodařilo načíst (offline?)','err');return}
-  try{sb=window.supabase.createClient(cloud.url,cloud.key);const {data}=await sb.auth.getSession();sbUser=data.session?.user||null;sb.auth.onAuthStateChange((_e,sess)=>{sbUser=sess?.user||null;cloudStatus();if(sbUser)syncAll()});if(sbUser)syncAll()}catch(e){cloudStatus('Chyba připojení: '+e.message,'err')}cloudStatus()}
-async function cloudConnect(){cloud={url:document.getElementById('cl-url').value.trim().replace(/\/$/,''),key:document.getElementById('cl-key').value.trim(),email:document.getElementById('cl-email').value.trim()};save(LS.cloud,cloud);
-  if(!cloud.url||!cloud.key||!cloud.email){toast('Vyplň URL, klíč i e-mail');return}await initCloud();if(!sb)return;if(sbUser){toast('Už jsi přihlášen');syncAll(true);return}
-  const {error}=await sb.auth.signInWithOtp({email:cloud.email,options:{emailRedirectTo:location.href.split('#')[0]}});if(error){cloudStatus('Přihlášení selhalo: '+error.message,'err');return}cloudStatus('Odkaz pro přihlášení odeslán na '+cloud.email+'. Otevři ho na tomto zařízení.','warn')}
-async function cloudLogout(){if(sb){await sb.auth.signOut()}sbUser=null;cloudStatus();toast('Odhlášen')}
+  try{sb=window.supabase.createClient(cloud.url,cloud.key);const {data}=await sb.auth.getSession();sbUser=data.session?.user||null;sb.auth.onAuthStateChange((ev,sess)=>{sbUser=sess?.user||null;cloudStatus();renderLoginHint();if(ev==='PASSWORD_RECOVERY')handleRecovery();if(sbUser)syncAll()});if(sbUser)syncAll()}catch(e){cloudStatus('Chyba připojení: '+e.message,'err')}cloudStatus()}
+async function cloudLogin(){
+  if(!(CLOUD_CONFIG.url&&CLOUD_CONFIG.key)){cloud.url=document.getElementById('cl-url').value.trim().replace(/\/$/,'');cloud.key=document.getElementById('cl-key').value.trim()}
+  cloud.email=document.getElementById('cl-email').value.trim();const pass=document.getElementById('cl-pass').value;save(LS.cloud,cloud);
+  if(!cloud.url||!cloud.key){toast('Chybí adresa cloudu – ozvi se správci aplikace');return}
+  if(!cloud.email||!pass){toast('Vyplň e-mail i heslo');return}
+  const btn=document.getElementById('cl-login');btn.disabled=true;btn.textContent='Přihlašuji…';
+  try{if(!sb)await initCloud();if(!sb)throw new Error('cloud nedostupný');
+    const {error}=await sb.auth.signInWithPassword({email:cloud.email,password:pass});
+    if(error){const m=/Invalid login/i.test(error.message)?'Špatný e-mail nebo heslo.':/Email not confirmed/i.test(error.message)?'E-mail ještě není potvrzený – klikni na odkaz v potvrzovacím e-mailu.':error.message;cloudStatus('Přihlášení selhalo: '+m,'err');return}
+    document.getElementById('cl-pass').value='';toast('Přihlášeno ✔');cloudStatus()}
+  catch(e){cloudStatus('Chyba: '+e.message,'err')}finally{btn.disabled=false;btn.textContent='Přihlásit'}}
+async function cloudForgot(){const email=document.getElementById('cl-email').value.trim();if(!email){toast('Nejdřív vyplň e-mail');return}
+  if(!sb)await initCloud();if(!sb){toast('Cloud nedostupný');return}
+  const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.href.split('#')[0].split('?')[0]});
+  if(error){cloudStatus('Odeslání selhalo: '+error.message,'err');return}cloudStatus('Odkaz pro nové heslo odeslán na '+email+'. Otevři ho a zadej nové heslo.','warn')}
+async function handleRecovery(){const np=prompt('Zadej nové heslo (min. 6 znaků):');if(!np)return;const {error}=await sb.auth.updateUser({password:np});if(error){cloudStatus('Heslo se nepodařilo změnit: '+error.message,'err')}else{toast('Heslo změněno, jsi přihlášená');cloudStatus()}}
+async function cloudLogout(){if(sb){await sb.auth.signOut()}sbUser=null;cloudStatus();renderLoginHint();toast('Odhlášeno')}
 async function pushPending(){if(!sb||!sbUser||!pending.length||!navigator.onLine)return;const batch=[...pending];try{
   const byT={};for(const p of batch)(byT[p.table]=byT[p.table]||[]).push(p.row);
   if(byT.orders){const rows=dedupe(byT.orders).map(r=>({id:r.id,user_id:sbUser.id,date:r.date,ico:r.ico||null,amount:r.amount,note:r.note||null,deleted:!!r.deleted,updated_at:r.updated_at}));const {error}=await sb.from('orders').upsert(rows);if(error)throw error}
@@ -791,6 +874,7 @@ function addReminderRow(r){const box=document.getElementById('st-rem');const d=d
 function renderReminders(){const box=document.getElementById('st-rem');box.innerHTML='';(settings.reminders||[]).forEach(addReminderRow)}
 function readReminders(){return [...document.querySelectorAll('#st-rem .rem-row')].map(d=>{const [t,x,c]=d.querySelectorAll('input');return {time:t.value,text:x.value.trim(),on:c.checked}}).filter(r=>r.time&&r.text)}
 
+function renderLoginHint(){const el=document.getElementById('loginhint');if(!el)return;el.style.display=(cloud.url&&cloud.key&&!sbUser)?'block':'none'}
 /* ================= UI HELPERS ================= */
 let toastT=null;
 function toast(msg,btn,fn){const t=document.getElementById('toast'),b=document.getElementById('toast-b');document.getElementById('toast-t').textContent=msg;if(btn){b.style.display='';b.textContent=btn;b.onclick=()=>{fn();hideToast()}}else b.style.display='none';t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(hideToast,btn?6000:2500)}
@@ -803,10 +887,11 @@ function celebrateCheck(before,beforeDay){const after=monthStats(ymOf(new Date()
 function confetti(color){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const b=document.createElement('div');b.className='burst';for(let i=0;i<40;i++){const p=document.createElement('i');p.style.left=Math.random()*100+'vw';p.style.top=(-10-Math.random()*20)+'vh';p.style.background=[color,'var(--ink)','var(--t1)','var(--t2)'][i%4];p.style.animationDelay=Math.random()*0.4+'s';p.style.transform=`rotate(${Math.random()*360}deg)`;b.appendChild(p)}document.body.appendChild(b);setTimeout(()=>b.remove(),2200)}
 document.getElementById('o-amount').addEventListener('keydown',e=>{if(e.key==='Enter')saveOrder()});
 document.getElementById('o-note').addEventListener('keydown',e=>{if(e.key==='Enter')saveOrder()});
+document.getElementById('cl-pass').addEventListener('keydown',e=>{if(e.key==='Enter')cloudLogin()});
 
 let rsz;window.addEventListener('resize',()=>{clearTimeout(rsz);rsz=setTimeout(render,150)});
 /* ================= BOOT ================= */
-resetForm(); render(); initCloud(); updatePauseTab();
+resetForm(); render(); initCloud().then(renderLoginHint); updatePauseTab();
 document.addEventListener('click',function once(){if('Notification'in window&&Notification.permission==='default')Notification.requestPermission();document.removeEventListener('click',once)});
 setInterval(()=>{if(todayIso()!==document.getElementById('o-date').dataset.day){document.getElementById('o-date').dataset.day=todayIso();render()}},60000);
 </script>
