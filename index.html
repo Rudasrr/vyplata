@@ -40,7 +40,7 @@ h2{font-size:15px;font-weight:700;color:var(--ink-2);margin-bottom:10px}
 .card.flat{background:transparent;border:0;padding:0}
 
 /* thermometer */
-.thermo{padding:20px 18px 16px;background:linear-gradient(145deg,#FFFFFF 0%,#F3F7FF 60%,#EAF1FF 100%);border-color:#DCE6FA;box-shadow:0 1px 2px rgba(27,34,51,.04),0 16px 34px -20px rgba(47,111,237,.35)}
+.thermo{border-radius:var(--r);border:1px solid #DCE6FA;padding:18px;background:linear-gradient(145deg,#FFFFFF 0%,#F3F7FF 60%,#EAF1FF 100%);border-color:#DCE6FA;box-shadow:0 1px 2px rgba(27,34,51,.04),0 16px 34px -20px rgba(47,111,237,.35)}
 .thermo .pay{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 .thermo .pay .val{font-size:44px;font-weight:800;letter-spacing:-.03em;line-height:1}
 .thermo .pay .lbl{color:var(--ink-2);font-weight:600}
@@ -200,12 +200,31 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
 .todayorders .none{padding:10px 0 2px;font-size:13px;color:var(--ink-3)}
 .todayorders .more{display:block;padding:8px 0 0;font-size:13px;color:var(--t1);font-weight:700;text-decoration:none}
 .loginhint{background:var(--t3-soft);color:#7A5804;border-radius:var(--r-s);padding:10px 14px;font-size:13.5px;font-weight:600;margin-bottom:12px}.loginhint a{color:#7A5804;text-decoration:underline}
-.coach{background:linear-gradient(135deg,#FFF3F6 0%,#FFF9F3 50%,#F1F5FF 100%);border-color:#F6E6EC;padding:16px 18px;position:relative;overflow:hidden}
+.hero{margin-bottom:14px}
+.hero-k{font-size:13px;font-weight:700;color:var(--ink-2);margin-bottom:2px}
+.hero .track{margin:22px 0 4px}
+.zone{border-radius:22px;padding:14px;margin-bottom:14px}
+.zone .card,.zone .grid3{margin-bottom:12px}
+.zone>*:last-child{margin-bottom:0}
+.zone-day{background:linear-gradient(180deg,#FFF6EC,#FFF1E2);border:1px solid #F7E3CC}
+.zone-month{background:linear-gradient(180deg,#EEF3FF,#E7EEFD);border:1px solid #D9E3F8}
+.zone-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:2px 6px 12px;flex-wrap:wrap}
+.zone-t{font-size:17px;font-weight:800;letter-spacing:-.01em}
+.zone-day .zone-t{color:#9A5A12}.zone-month .zone-t{color:#1F4FB8}
+.zone-s{font-size:13px;color:var(--ink-2)}.zone-s b{color:var(--ink)}
+.entry{border:2px solid #F0B36A;box-shadow:0 14px 30px -18px rgba(240,140,40,.5)}
+.entry h2{color:#9A5A12}
+.entry .qrow{grid-template-columns:1fr 1fr;margin-bottom:10px}
+.entry .qrow input{padding:14px 14px;font-size:16px;font-weight:600}
+.entry .btn{background:linear-gradient(180deg,#F59E3B,#E8892A);box-shadow:0 8px 18px -8px rgba(232,137,42,.7);font-size:16px;padding:14px}
+.mcharts .card+.card{margin-top:12px}
+#s-fc::before{background:var(--t1)}#s-month::before{background:var(--t2)}
+.coach{background:linear-gradient(135deg,#FFF3F6 0%,#FFF9F3 50%,#F1F5FF 100%);border:1px solid #F6E6EC;border-radius:var(--r);padding:14px 18px;position:relative;overflow:hidden;margin-bottom:14px}
 .coach::after{content:"✨";position:absolute;right:14px;top:10px;font-size:22px;opacity:.55}
 .coach .l1{font-weight:800;font-size:16px;line-height:1.3}
 .coach .l2{margin-top:6px;color:var(--ink-2);font-size:14px}
 .coach .l2 b{color:var(--ink)}
-.quick{padding:12px 14px}
+.mcharts{display:block}
 .qrow{display:grid;grid-template-columns:1.2fr 1fr auto;gap:8px}
 .qrow input{padding:11px 12px}
 .qsub{margin-top:6px}.qsub a{color:var(--t1);font-weight:700;text-decoration:none}
@@ -216,8 +235,6 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
 .rem-row{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;margin-bottom:8px}
 .rem-row input[type=time]{width:110px}
 .rem-row input[type=checkbox]{width:20px;height:20px}
-.dash{display:flex;flex-direction:column}
-.a-coach{order:1}.a-quick{order:2}.a-thermo{order:3}.a-stats{order:4}.a-day{order:5}.a-path{order:6}.a-trend{order:7}.a-bars{order:8}
 .mdash{display:flex;flex-direction:column}
 .m-cal{order:1}.m-stats{order:2}.m-sum{order:3}.m-hist{order:4}.m-help{order:5}
 .narrow{max-width:720px;margin:0 auto}
@@ -229,99 +246,132 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
   .tab.active{background:#fff;box-shadow:0 1px 2px rgba(27,34,51,.06),0 8px 20px -12px rgba(27,34,51,.3)}
   .top{margin:6px 0 14px}
   .card,.grid3{margin-bottom:0}
-  .dash{display:grid;gap:14px;grid-template-columns:1.05fr 1fr 1.05fr;grid-template-rows:auto auto auto;
-    grid-template-areas:"coach quick day" "thermo stats day" "path trend bars";align-items:stretch}
-  .a-coach{grid-area:coach}.a-quick{grid-area:quick}.a-thermo{grid-area:thermo}.a-stats{grid-area:stats;align-content:stretch}
-  .a-stats .stat{display:flex;flex-direction:column;justify-content:center}.a-stats .stat .v{font-size:24px}
-  .a-day{display:flex;flex-direction:column}.a-day .flexi{margin-top:auto!important}.a-day .todayorders{margin-bottom:12px}
-  .a-trend,.a-bars{display:flex;flex-direction:column}.a-trend #t-chart,.a-bars #t-bars{flex:1;display:flex;align-items:center}.a-trend svg,.a-bars svg{width:100%}.a-day{grid-area:day}.a-path{grid-area:path}.a-trend{grid-area:trend}.a-bars{grid-area:bars}
-  .a-quick{display:flex;flex-direction:column;justify-content:center}
-  .thermo .pay .val{font-size:44px}
-  .path .row{padding:8px 0}
+  .hero{display:grid;grid-template-columns:minmax(300px,1fr) 1.6fr;gap:28px;align-items:center;padding:14px 24px;margin-bottom:12px}
+  .hero .pay .val{font-size:44px}
+  .hero .track{margin:18px 0 2px}
+  .coach{padding:10px 16px;margin-bottom:12px}
+  .coach .l1{font-size:15px}.coach .l2{font-size:13.5px;margin-top:3px}
+  .top{margin:2px 0 10px}
+  .zones2{display:grid;grid-template-columns:2fr 3fr;gap:14px;align-items:start}
+  .zone{padding:12px}.zone .card,.zone .grid3{margin-bottom:10px}.zone-h{padding:0 4px 10px}
+  .mgrid{display:grid;grid-template-columns:1.1fr 1fr;gap:10px}
+  .mcharts{display:grid;grid-template-rows:auto auto;gap:10px}
+  .mcharts .card+.card{margin-top:0}
+  .mcharts .card{margin-bottom:0}
+  .head2{display:grid;grid-template-columns:minmax(260px,auto) 1fr;gap:20px;align-items:center;margin:0 0 12px;padding-right:330px}
+  .tab .tl{display:none}.tab .tl-keep{display:inline}.tab{padding:9px 12px}.tab.pause.running .tl{display:inline}
+  .tabbar .in{background:#fff;border-radius:999px;padding:4px;box-shadow:0 1px 2px rgba(27,34,51,.06),0 8px 20px -12px rgba(27,34,51,.3)}.tab.active{box-shadow:none;background:var(--t1-soft);color:var(--t1)}
+  .head2 .top{margin:0}.head2 .coach{margin:0}
+  .path .row{padding:6px 0}
+  .card{padding:14px 16px}
+  .entry .qrow input{padding:12px 14px}.entry .btn{padding:12px}
+  .flexi .f{padding:10px 12px}
   .grid3{grid-template-columns:repeat(3,1fr)}
   .mdash{display:grid;gap:14px;grid-template-columns:minmax(420px,520px) 1fr;grid-template-rows:auto 1fr auto;grid-template-areas:"cal stats" "cal sum" "help hist";align-items:start}
   .m-cal{grid-area:cal}.m-stats{grid-area:stats}.m-sum{grid-area:sum}.m-hist{grid-area:hist}.m-help{grid-area:help}
   #v-orders,#v-settings{max-width:760px;margin:0 auto}
 }
+@media (min-width:1500px){.tab .tl{display:inline}.tab{padding:8px 14px}.head2{padding-right:640px}}
+@media (max-width:559px){.zone .grid3{grid-template-columns:1fr 1fr}.zone .grid3 .stat:first-child{grid-column:1/-1}}
 @media (min-width:560px){.grid3 .stat .v{font-size:21px}.thermo .pay .val{font-size:52px}}
 </style>
 </head>
 <body>
 <nav class="tabbar"><div class="in">
-  <button class="tab active" data-v="today" onclick="go('today')"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Dnes</button>
-  <button class="tab" data-v="orders" onclick="go('orders')"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Objednávky</button>
-  <button class="tab pause" id="tab-pause" onclick="openPause()"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg><span id="tab-pause-l">Pauza</span></button>
-  <button class="tab" data-v="month" onclick="go('month')"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Měsíc</button>
-  <button class="tab" data-v="settings" onclick="go('settings')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2-1.2L14.2 3H9.8l-.4 2.6a7 7 0 0 0-2 1.2l-2.3-1-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2 1.2l.4 2.6h4.4l.4-2.6a7 7 0 0 0 2-1.2l2.3 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg>Nastavení</button>
+  <button class="tab active" data-v="today" onclick="go('today')"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span class="tl">Dnes</span></button>
+  <button class="tab" data-v="orders" onclick="go('orders')"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span class="tl">Objednávky</span></button>
+  <button class="tab pause" id="tab-pause" onclick="openPause()"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg><span id="tab-pause-l" class="tl tl-keep">Pauza</span></button>
+  <button class="tab" data-v="month" onclick="go('month')"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="tl">Měsíc</span></button>
+  <button class="tab" data-v="settings" onclick="go('settings')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2-1.2L14.2 3H9.8l-.4 2.6a7 7 0 0 0-2 1.2l-2.3-1-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2 1.2l.4 2.6h4.4l.4-2.6a7 7 0 0 0 2-1.2l2.3 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg><span class="tl">Nastavení</span></button>
 </div></nav>
 <div id="app">
 
 <!-- ===== DNES ===== -->
 <section class="view active" id="v-today">
-  <div class="top"><div><h1 id="t-greet">Dobrý den</h1><div class="date" id="t-date"></div></div><div class="flexi-badge" id="t-flexibadge"></div></div>
+  <div class="head2">
+    <div class="top"><div><h1 id="t-greet">Dobrý den</h1><div class="date" id="t-date"></div></div><div class="flexi-badge" id="t-flexibadge"></div></div>
+    <div class="coach" id="t-coach"></div>
+  </div>
   <div class="loginhint" id="loginhint" style="display:none">Nejsi přihlášená – objednávky se ukládají jen v tomto prohlížeči. <a href="#" onclick="go('settings');return false">Přihlásit se</a></div>
 
-  <div class="dash">
-    <div class="card coach a-coach" id="t-coach"></div>
-
-    <div class="card quick a-quick">
-      <div class="qrow">
-        <input id="q-ico" inputmode="numeric" list="ico-list" placeholder="IČO" maxlength="12" autocomplete="off">
-        <input id="q-amount" inputmode="decimal" placeholder="Kč">
-        <button class="btn" onclick="quickAdd()">Přidat</button>
-      </div>
-      <div class="qsub"><span class="faint small">Datum dnes · pro jiný den nebo poznámku použij <a href="#" onclick="go('orders');return false">Objednávky</a></span></div>
-    </div>
-
-    <div class="card thermo a-thermo">
-      <div class="pay"><span class="val num" id="t-pay">0 Kč</span><span class="lbl">výplata podle aktuálního plnění</span></div>
+  <div class="hero thermo">
+    <div class="hero-l">
+      <div class="hero-k">Výplata podle aktuálního plnění</div>
+      <div class="pay"><span class="val num" id="t-pay">0 Kč</span></div>
       <div class="sub" id="t-paysub"></div>
+    </div>
+    <div class="hero-r">
       <div class="track">
         <div class="zones" id="t-zones"></div>
         <div class="ticks" id="t-ticks"></div>
         <div class="marker" id="t-marker"><div class="tag num" id="t-tag">0 %</div><div class="pin"></div></div>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
         <span id="t-tierpill" class="tierpill tier-0"><i class="dot"></i>pod 90 %</span>
         <span class="small muted num" id="t-monthsum"></span>
       </div>
     </div>
+  </div>
 
-    <div class="grid3 a-stats">
-      <div class="stat" id="s-day"><div class="k">Dnešní obrat</div><div class="v num" id="s-day-v">0 Kč</div><div class="s num" id="s-day-s"></div></div>
-      <div class="stat" id="s-month"><div class="k">Plnění měsíce</div><div class="v num" id="s-month-v">0 %</div><div class="s num" id="s-month-s"></div></div>
-      <div class="stat" id="s-bal"><div class="k">Proti plánu</div><div class="v num" id="s-bal-v">0 Kč</div><div class="s num" id="s-bal-s"></div></div>
+  <div class="zones2">
+  <section class="zone zone-day">
+    <div class="zone-h"><span class="zone-t">Dnes</span><span class="zone-s num" id="d-head"></span></div>
+
+    <div class="card entry">
+      <h2>Nová objednávka</h2>
+      <div class="qrow">
+        <input id="q-ico" inputmode="numeric" list="ico-list" placeholder="IČO" maxlength="12" autocomplete="off">
+        <input id="q-amount" inputmode="decimal" placeholder="Kč">
+      </div>
+      <button class="btn block" onclick="quickAdd()">Přidat objednávku</button>
+      <div class="qsub"><span class="faint small">Zapíše se k dnešku · jiný den nebo poznámku zadáš v <a href="#" onclick="go('orders');return false">Objednávkách</a></span></div>
     </div>
 
-    <div class="card a-day">
-      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><h2 style="margin:0">Dnešní den</h2><span class="small num" id="d-head"></span></div>
-      <div class="small muted num" id="d-pct" style="margin-top:2px"></div>
+    <div class="card">
+      <h2 style="margin:0">Plnění dne</h2><div class="small muted num" id="d-pct" style="margin-top:2px"></div>
       <div class="bar"><i id="d-fill"></i><em style="left:76.9%" title="100 %"></em><em class="gold" style="left:100%;transform:translateX(-2px)" title="130 %"></em></div>
       <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);margin-top:6px"><span>0</span><span class="num" id="d-l100"></span><span class="num" id="d-l130"></span></div>
       <div class="todayorders" id="d-orders"></div>
-      <div class="flexi" style="margin-top:14px">
-        <div class="f" id="fx-today"><div class="k">Flexi dnes</div><div class="v">—</div><div class="s"></div></div>
-        <div class="f" id="fx-tomorrow"><div class="k" id="fx-tomorrow-k">Flexi příště</div><div class="v">—</div><div class="s"></div></div>
+    </div>
+
+    <div class="card">
+      <h2>Práce z domu (flexi)</h2>
+      <div class="flexi">
+        <div class="f" id="fx-today"><div class="k">Dnes</div><div class="v">—</div><div class="s"></div></div>
+        <div class="f" id="fx-tomorrow"><div class="k" id="fx-tomorrow-k">Příště</div><div class="v">—</div><div class="s"></div></div>
       </div>
     </div>
+  </section>
 
-    <div class="card path a-path">
-      <h2>Cesta k vyšší provizi</h2>
-      <div id="t-path"></div>
-      <div class="jump" id="t-jump" style="display:none"></div>
+  <section class="zone zone-month">
+    <div class="zone-h"><span class="zone-t" id="m-title">Tento měsíc</span><span class="zone-s num" id="m-sub"></span></div>
+
+    <div class="grid3">
+      <div class="stat" id="s-month"><div class="k">Plnění</div><div class="v num" id="s-month-v">0 %</div><div class="s num" id="s-month-s"></div></div>
+      <div class="stat" id="s-bal"><div class="k">Proti plánu</div><div class="v num" id="s-bal-v">0 Kč</div><div class="s num" id="s-bal-s"></div></div>
+      <div class="stat" id="s-fc"><div class="k">Odhad konce</div><div class="v num" id="s-fc-v">—</div><div class="s num" id="s-fc-s"></div></div>
     </div>
 
-    <div class="card a-trend">
-      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap"><h2 style="margin:0">Trend měsíce</h2><span class="small muted num" id="t-forecast"></span></div>
-      <div id="t-chart" style="margin-top:12px"></div>
-      <div class="legend"><span><i style="background:var(--ink)"></i>obrat</span><span><i style="background:var(--ink-3)"></i>plán</span><span><i style="background:var(--t1);opacity:.6"></i>odhad</span><span><i style="background:var(--t2);opacity:.5"></i>minulý měsíc</span></div>
+    <div class="mgrid">
+      <div class="card path">
+        <h2>Cesta k vyšší provizi</h2>
+        <div id="t-path"></div>
+        <div class="jump" id="t-jump" style="display:none"></div>
+      </div>
+      <div class="mcharts">
+        <div class="card">
+          <h2>Trend obratu</h2>
+          <div id="t-chart"></div>
+          <div class="legend"><span><i style="background:var(--ink)"></i>obrat</span><span><i style="background:var(--ink-3)"></i>plán</span><span><i style="background:var(--t1);opacity:.6"></i>odhad</span><span><i style="background:var(--t2);opacity:.5"></i>minulý měsíc</span></div>
+        </div>
+        <div class="card">
+          <h2>Obrat po dnech</h2>
+          <div id="t-bars"></div>
+          <div class="legend"><span><i style="background:var(--ink-3)"></i>100 %</span><span><i style="background:var(--t3)"></i>130 % = flexi</span><span id="t-streak" class="num"></span></div>
+        </div>
+      </div>
     </div>
-
-    <div class="card a-bars">
-      <h2>Dny</h2>
-      <div id="t-bars"></div>
-      <div class="legend"><span><i style="background:var(--ink-3)"></i>100 %</span><span><i style="background:var(--t3)"></i>130 % = flexi</span><span id="t-streak" class="num"></span></div>
-    </div>
+  </section>
   </div>
 </section>
 
@@ -396,13 +446,17 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
         <div><label class="fld">Project URL</label><input id="cl-url" placeholder="https://xxxx.supabase.co"></div>
         <div><label class="fld">Klíč (publishable / anon)</label><input id="cl-key" placeholder="sb_publishable_… nebo eyJ…"></div>
       </div>
-      <div class="row" style="margin:0">
-        <div><label class="fld">E-mail</label><input id="cl-email" type="email" placeholder="miruska@email.cz" autocomplete="username"></div>
-        <div><label class="fld">Heslo</label><input id="cl-pass" type="password" placeholder="••••••••" autocomplete="current-password"></div>
+      <div id="cl-out" style="display:grid;gap:10px">
+        <div class="row" style="margin:0">
+          <div><label class="fld">E-mail</label><input id="cl-email" type="email" placeholder="miruska@email.cz" autocomplete="username"></div>
+          <div><label class="fld">Heslo</label><input id="cl-pass" type="password" placeholder="••••••••" autocomplete="current-password"></div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn" id="cl-login" onclick="cloudLogin()">Přihlásit</button>
+          <button class="btn ghost" onclick="cloudForgot()">Zapomenuté heslo</button>
+        </div>
       </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn" id="cl-login" onclick="cloudLogin()">Přihlásit</button>
-        <button class="btn ghost" onclick="cloudForgot()">Zapomenuté heslo</button>
+      <div id="cl-in" style="display:none;gap:8px;flex-wrap:wrap">
         <button class="btn soft" onclick="syncAll(true)">Synchronizovat teď</button>
         <button class="btn ghost" onclick="cloudLogout()">Odhlásit</button>
       </div>
@@ -557,10 +611,10 @@ function renderToday(){
 
   // stats
   const dayRev=s.byDay[today]||0; const dayPct=dayRev/settings.daily*100;
-  document.getElementById('s-day-v').textContent=fmtK(dayRev);
-  document.getElementById('s-day-s').textContent=isWorking(today)?`${fmtP(dayPct)} z ${fmtN(settings.daily)}`:(dayMark(today)?'dnes volno':'víkend / svátek');
-  document.getElementById('s-month-v').textContent=fmtP(s.pct,1);
-  document.getElementById('s-month-s').textContent=`${s.remaining.length} prac. ${s.remaining.length===1?'den':(s.remaining.length<5?'dny':'dní')} zbývá`;
+    document.getElementById('s-month-v').textContent=fmtP(s.pct,1);
+  document.getElementById('s-month-s').textContent=`${fmtK(s.revenue)} z ${fmtK(s.target)}`;
+  document.getElementById('s-fc-v').textContent=s.elapsed.length?fmtP(s.forecast/s.target*100):'—';document.getElementById('s-fc-s').textContent=s.elapsed.length?`${fmtK(s.forecast)} · zbývá ${s.remaining.length} ${s.remaining.length===1?'den':(s.remaining.length<5?'dny':'dní')}`:'zatím bez dat';
+  document.getElementById('m-title').textContent=MONTHS[new Date().getMonth()].replace(/^./,c=>c.toUpperCase());document.getElementById('m-sub').innerHTML=`cíl <b>${fmtK(s.target)}</b> = ${s.wd.length} dní × ${fmtN(settings.daily)}`;
   const bal=s.revenue-s.planToDate; const eb=document.getElementById('s-bal'); eb.className='stat '+(bal>=0?'pos':'neg');
   document.getElementById('s-bal-v').textContent=(bal>=0?'+':'−')+fmtK(Math.abs(bal));
   document.getElementById('s-bal-s').textContent=s.remainingAfterToday>0?(bal>=0?`náskok ${fmtN(bal/s.remainingAfterToday)} Kč/den`:`dohnat ${fmtN(-bal/s.remainingAfterToday)} Kč/den`):'poslední den';
@@ -570,7 +624,7 @@ function renderToday(){
   document.getElementById('d-fill').style.width=Math.min(dayRev/flexiT,1)*100+'%';
   document.getElementById('d-fill').style.background=dayPct>=settings.flexiPct?'var(--t3)':(dayPct>=100?'var(--t2)':'var(--t1)');
   document.getElementById('d-pct').textContent=dayRev>=flexiT?`${fmtP(dayPct)} – flexi ${nextFlexiWord()} splněno`:`do 100 % zbývá ${fmtK(Math.max(0,settings.daily-dayRev))} · do ${settings.flexiPct} % ${fmtK(Math.max(0,flexiT-dayRev))}`;
-  document.getElementById('d-head').innerHTML=isWorking(today)?`<b>${fmtK(dayRev)}</b> <span class="muted">z ${fmtK(settings.daily)}</span> · <b style="color:${dayPct>=settings.flexiPct?'var(--t3)':dayPct>=100?'var(--t2)':'inherit'}">${fmtP(dayPct)}</b>`:`<span class="muted">${dayMark(today)?'volno':'víkend / svátek'}</span>`;
+  document.getElementById('d-head').innerHTML=isWorking(today)?`obrat <b>${fmtK(dayRev)}</b> z cíle ${fmtK(settings.daily)} · <b style="color:${dayPct>=settings.flexiPct?'var(--t3)':dayPct>=100?'var(--t2)':'inherit'}">${fmtP(dayPct)}</b>`:`<span class="muted">${dayMark(today)?'volno':'víkend / svátek'}</span>`;
   {const tod=activeOrders().filter(o=>o.date===today).sort((a,b)=>b.updated_at.localeCompare(a.updated_at));const box=document.getElementById('d-orders');
    box.innerHTML=tod.length?tod.slice(0,6).map(o=>`<div class="to"><span><span class="ico">${o.ico||'bez IČO'}</span>${o.note?`<span class="n">${esc(o.note)}</span>`:''}</span><span class="amt num">${fmtK(o.amount)}</span></div>`).join('')+`<a href="#" class="more" onclick="go('orders');return false">${tod.length>6?`+ ${tod.length-6} dalších · `:''}${tod.length} ${tod.length===1?'objednávka':(tod.length<5?'objednávky':'objednávek')} dnes – upravit</a>`:`<div class="none">Dnes zatím žádná objednávka. První zadej nahoře.</div>`}
   document.getElementById('d-l100').textContent=fmtN(settings.daily); document.getElementById('d-l130').textContent=fmtN(flexiT);
@@ -580,15 +634,14 @@ function renderToday(){
   const pwd=prevWorkingDay(today); const prevRev=pwd?(revenueByDay(pwd.slice(0,7))[pwd]||0):0; const prevPct=prevRev/settings.daily*100;
   setFlexi('fx-today',prevPct>=settings.flexiPct,prevPct>=settings.flexiPct?'Ano, práce z domu 🏠':'Ne',pwd?`${WD[fromIso(pwd).getDay()]} ${fmtDate(pwd)}: ${fmtP(prevPct)}`:'');
   const nwd=nextWorkingDay(today);
-  const nwdName=nwd?WD[fromIso(nwd).getDay()]:'';document.getElementById('fx-tomorrow-k').textContent=nwd?(nwd===addDays(today,1)?'Flexi zítra':`Flexi v ${['neděli','pondělí','úterý','středu','čtvrtek','pátek','sobotu'][fromIso(nwd).getDay()]}`):'Flexi příště';
+  const nwdName=nwd?WD[fromIso(nwd).getDay()]:'';document.getElementById('fx-tomorrow-k').textContent=nwd?(nwd===addDays(today,1)?'Zítra':`V ${['neděli','pondělí','úterý','středu','čtvrtek','pátek','sobotu'][fromIso(nwd).getDay()]}`):'Příště';
   if(isWorking(today)){setFlexi('fx-tomorrow',dayPct>=settings.flexiPct,dayPct>=settings.flexiPct?'Nárok splněn 🏠':`chybí ${fmtK(Math.max(0,flexiT-dayRev))}`,nwd?`${nwdName} ${fmtDate(nwd)} – práce z domu`:'')}
   else{setFlexi('fx-today',false,'Dnes nepracuješ',dayMark(today)?'volno':'víkend / svátek');const pw2=nwd?prevWorkingDay(nwd):null;const r2=pw2?(revenueByDay(pw2.slice(0,7))[pw2]||0):0;const p2=r2/settings.daily*100;setFlexi('fx-tomorrow',p2>=settings.flexiPct,p2>=settings.flexiPct?'Ano, práce z domu 🏠':'Ne',pw2?`${WD[fromIso(pw2).getDay()]} ${fmtDate(pw2)}: ${fmtP(p2)}`:'')}
 
   // path
   renderPath(s);
   // charts
-  document.getElementById('t-forecast').textContent=s.elapsed.length?`odhad konce měsíce ${fmtK(s.forecast)} (${fmtP(s.forecast/s.target*100)})`:'zatím bez dat';
-  document.getElementById('t-chart').innerHTML=cumChart(s);
+    document.getElementById('t-chart').innerHTML=cumChart(s);
   document.getElementById('t-bars').innerHTML=barChart(s);
   const st=streak(s); document.getElementById('t-streak').textContent=st>0?`🔥 ${st} ${st===1?'den':(st<5?'dny':'dní')} v řadě nad 100 %`:'';
 }
@@ -617,7 +670,7 @@ function streak(s){const today=todayIso();let n=0;const list=s.wd.filter(d=>d<=t
 /* ================= CHARTS (SVG) ================= */
 function chartW(id){const el=document.getElementById(id);return Math.max(300,el&&el.clientWidth?el.clientWidth:340)}
 function cumChart(s){
-  const W=chartW('t-chart'),H=Math.round(W*(W>500?0.5:0.42)),L=40,R=12,T=14,B=26; const n=s.wd.length; if(!n)return '<div class="empty">Žádné pracovní dny</div>';
+  const W=chartW('t-chart'),H=Math.round(W*(W>360?0.3:0.42)),L=40,R=12,T=14,B=26; const n=s.wd.length; if(!n)return '<div class="empty">Žádné pracovní dny</div>';
   const today=todayIso(); const maxY=Math.max(s.target*1.4,s.revenue,s.forecast)*1.05;
   const x=i=>L+(i/(Math.max(n-1,1)))*(W-L-R); const y=v=>T+(1-v/maxY)*(H-T-B);
   let cum=0; const pts=[]; s.wd.forEach((d,i)=>{if(d<=today){cum+=s.byDay[d]||0;pts.push([x(i),y(cum)])}});
@@ -632,7 +685,7 @@ function cumChart(s){
   return `<svg class="chart" viewBox="0 0 ${W} ${H}">${tierLines}${plan}${lmp}${area}${fc}${line}${yl}${xl}</svg>`;
 }
 function barChart(s){
-  const W=chartW('t-bars'),H=Math.round(W*(W>500?0.48:0.3)),L=8,R=8,T=10,B=22; const n=s.wd.length; if(!n)return '';
+  const W=chartW('t-bars'),H=Math.round(W*(W>360?0.22:0.32)),L=8,R=8,T=10,B=22; const n=s.wd.length; if(!n)return '';
   const flexiT=settings.daily*settings.flexiPct/100; const maxY=Math.max(flexiT*1.15,...s.wd.map(d=>s.byDay[d]||0))*1.05;
   const bw=(W-L-R)/n; const y=v=>T+(1-v/maxY)*(H-T-B); const today=todayIso();
   const bars=s.wd.map((d,i)=>{const r=s.byDay[d]||0;const p=r/settings.daily*100;const c=r>=flexiT?'var(--t3)':p>=100?'var(--t2)':p>0?'var(--t1)':'var(--t0-soft)';const h=Math.max(r>0?2:0,y(0)-y(r));const fut=d>today;return `<rect x="${L+i*bw+bw*0.15}" y="${y(r)}" width="${bw*0.7}" height="${fut?0:h}" rx="3" fill="${c}"/>${fut?`<rect x="${L+i*bw+bw*0.15}" y="${y(0)-2}" width="${bw*0.7}" height="2" fill="var(--line)"/>`:''}${d===today?`<rect x="${L+i*bw+bw*0.15}" y="${H-B+4}" width="${bw*0.7}" height="3" rx="1.5" fill="var(--ink)"/>`:''}`}).join('');
@@ -748,7 +801,7 @@ function exportCSV(list){const lines=['Datum;IČO;Hodnota;Poznámka',...list.map
 
 /* ================= CLOUD (Supabase) ================= */
 function queue(table,row){pending=pending.filter(p=>!(p.table===table&&p.row.id===row.id&&table!=='settings'));pending.push({table,row:JSON.parse(JSON.stringify(row))});save(LS.pending,pending)}
-function cloudStatus(msg,cls){const e=document.getElementById('cl-status');if(msg){e.className='status '+(cls||'');e.querySelector('span').textContent=msg;return}
+function cloudStatus(msg,cls){const e=document.getElementById('cl-status');const inn=document.getElementById('cl-in'),out=document.getElementById('cl-out');if(inn&&out){inn.style.display=sbUser?'flex':'none';out.style.display=sbUser?'none':'grid'}if(msg){e.className='status '+(cls||'');e.querySelector('span').textContent=msg;return}
   if(!cloud.url||!cloud.key){e.className='status';e.querySelector('span').textContent='Cloud není nastaven. Data jsou jen v tomto prohlížeči.'}
   else if(!sbUser){e.className='status warn';e.querySelector('span').textContent='Nejsi přihlášená – zadej e-mail a heslo. Data se zatím ukládají jen v tomto prohlížeči.'}
   else{e.className='status ok';e.querySelector('span').textContent=`Přihlášená jako ${sbUser.email}. ${pending.length?pending.length+' změn čeká na odeslání.':'Vše synchronizováno.'}`}}
