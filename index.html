@@ -323,6 +323,19 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
 .day-summary{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 .day-summary strong{font-size:34px;line-height:1.1;letter-spacing:-.035em}
 .day-summary span{font-size:14px;font-weight:700;color:var(--ink-2)}
+.today-hero{margin-top:16px;display:grid;gap:12px}
+.today-hero-numbers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.today-hero-numbers>div{background:#FFF2F8;border:1px solid #F1D6E4;border-radius:14px;padding:12px;min-width:0}
+.today-hero-numbers .k{display:block;font-size:12px;color:#824769;font-weight:700}
+.today-hero-numbers .v{display:block;font-size:21px;line-height:1.2;font-weight:800;margin-top:4px;overflow-wrap:anywhere}
+.today-hero-numbers .s{display:block;font-size:11px;color:var(--ink-2);margin-top:4px}
+.visual-meter{display:grid;gap:5px}
+.visual-meter .labels{display:flex;justify-content:space-between;gap:10px;font-size:12px;font-weight:700}
+.visual-meter .labels span:last-child{text-align:right;color:var(--ink-2)}
+.visual-meter .track{height:11px;margin:0;background:#F1E8EF;border-radius:99px;overflow:hidden}
+.visual-meter .fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#DF81B5,#AD4B91);transition:width .55s ease}
+.visual-meter.meter-flexi .fill{background:linear-gradient(90deg,#B89BE2,#8B60C0)}
+.visual-meter.monthly .fill{background:linear-gradient(90deg,#EAA96E,#D26B9A)}
 .day-milestones{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 10px}
 .milestone{border:1px solid var(--line);border-radius:14px;padding:12px;background:#FCFAFC;font-size:13px;min-width:0}
 .milestone .k{font-weight:800;color:var(--ink);margin-bottom:2px}
@@ -456,6 +469,7 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
     <div class="section-eyebrow">DNEŠEK</div>
     <h2 id="day-title">Dnešní obrat</h2>
     <div class="day-summary"><strong class="num" id="d-value">Začínáme</strong><span class="num" id="d-pct"></span></div>
+    <div class="today-hero" id="today-hero" aria-label="Dnešní přeplnění a postup k další metě"></div>
     <div class="entry" id="quick-entry">
       <h3>Nová objednávka</h3>
       <div class="qrow"><input id="q-ico" inputmode="numeric" list="ico-list" placeholder="IČO" maxlength="12" autocomplete="off" aria-label="IČO"><input id="q-amount" inputmode="decimal" placeholder="Hodnota v Kč" aria-label="Hodnota objednávky v Kč"></div>
@@ -697,6 +711,7 @@ function renderToday(){
   daily.innerHTML=`<div class="k">Denní cíl · ${fmtK(settings.daily)}</div><div class="v">${dayRev>=settings.daily?'Splněno ✓':`Chybí ${fmtK(settings.daily-dayRev)}`}</div>`;
   flexi.classList.toggle('done',dayRev>=flexiT&&isWorking(today));
   flexi.innerHTML=`<div class="k">Flexi · ${fmtK(flexiT)}</div><div class="v">${dayRev>=flexiT?(isWorking(today)?`Splněno ✓ · ${nextFlexiWord()} práce z domu`:'Limit obratu dosažen; flexi se počítá v pracovní den'):`Chybí ${fmtK(flexiT-dayRev)}`}</div>`;
+  renderTodayVisual(s,dayRev,flexiT);
   renderTodayMotivation(s,dayRev);
   const tod=activeOrders().filter(o=>o.date===today).sort((a,b)=>b.updated_at.localeCompare(a.updated_at));
   const box=document.getElementById('d-orders');
@@ -707,6 +722,16 @@ function renderToday(){
   document.getElementById('fx-tomorrow-k').textContent=nwd?(nwd===addDays(today,1)?'Zítra':`V ${['neděli','pondělí','úterý','středu','čtvrtek','pátek','sobotu'][fromIso(nwd).getDay()]}`):'Příště';
   if(isWorking(today))setFlexi('fx-tomorrow',dayPct>=settings.flexiPct,dayPct>=settings.flexiPct?'Nárok splněn 🏠':`chybí ${fmtK(Math.max(0,flexiT-dayRev))}`,nwd?`${nwdName} ${fmtDate(nwd)} – práce z domu`:'');
   else{setFlexi('fx-today',false,'Dnes nepracuješ',dayMark(today)?'volno':'víkend / svátek');const pw2=nwd?prevWorkingDay(nwd):null,r2=pw2?(revenueByDay(pw2.slice(0,7))[pw2]||0):0,p2=r2/settings.daily*100;setFlexi('fx-tomorrow',p2>=settings.flexiPct,p2>=settings.flexiPct?'Ano, práce z domu 🏠':'Ne',pw2?`${WD[fromIso(pw2).getDay()]} ${fmtDate(pw2)}: ${fmtP(p2)}`:'')}
+}
+function renderTodayVisual(s,dayRev,flexiT){
+  const working=isWorking(todayIso()),over=Math.max(0,dayRev-settings.daily),next=tiers().find(t=>s.target*t.min/100>s.revenue),future=s.remainingAfterToday;
+  const credit=working?over:Math.max(0,dayRev),drop=next&&future?credit/future:0;
+  const fill=(value,target)=>target>0?Math.max(0,Math.min(100,value/target*100)):0;
+  const meter=(label,right,value,target,extra='')=>`<div class="visual-meter ${extra}" role="img" aria-label="${label}: ${fmtK(value)} z ${fmtK(target)}"><div class="labels"><span>${label}</span><span>${right}</span></div><div class="track"><div class="fill" style="width:${fill(value,target)}%"></div></div></div>`;
+  const overText=over?`+${fmtK(over)}`:dayRev>=settings.daily?'Cíl splněn':`Ještě ${fmtK(settings.daily-dayRev)}`;
+  const paceText=next&&future?(drop?`−${fmtK(drop)}/den`:'Zatím beze změny'):next?'Už nezbývá pracovní den':'Nejvyšší pásmo';
+  const paceSub=next&&future?(working?`díky přeplnění nad ${fmtK(settings.daily)}`:'díky dnešnímu obratu mimo pracovní den'):'k další provizní metě';
+  document.getElementById('today-hero').innerHTML=`<div class="today-hero-numbers"><div><span class="k">Nad dnešní cíl</span><strong class="v num">${overText}</strong><span class="s">${over?'přeplněno v korunách':'každá další objednávka pomůže'}</span></div><div><span class="k">Snížení tempa k metě</span><strong class="v num">${paceText}</strong><span class="s">${paceSub}</span></div></div>${meter('Denní cíl',`${fmtK(dayRev)} / ${fmtK(settings.daily)}`,dayRev,settings.daily)}${meter('Hranice flexi',`${fmtK(dayRev)} / ${fmtK(flexiT)}`,dayRev,flexiT,'meter-flexi')}${next?meter(`Další pásmo ${next.min} %`,`${fmtP(fill(s.revenue,s.target*next.min/100))} cesty`,s.revenue,s.target*next.min/100,'monthly'):''}`;
 }
 function renderTodayMotivation(s,dayRev){
   const daily=settings.daily,over=Math.max(0,dayRev-daily),pay=payout(s.revenue,s.pct),beforeRev=s.revenue-dayRev,beforePay=payout(beforeRev,s.target?beforeRev/s.target*100:0),earned=pay-beforePay;
