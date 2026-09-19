@@ -329,6 +329,17 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
 .milestone .v{color:var(--ink-2)}
 .milestone.done{background:#E9F8EF;border-color:#C8EAD8}.milestone.done .k,.milestone.done .v{color:#1E7F5C}
 .day-context{font-size:13px;color:var(--ink-2)}
+.today-progress{border-top:1px solid var(--line);margin-top:18px;padding-top:18px}
+.today-progress h3{margin:0 0 10px!important}
+.today-progress-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.today-progress-grid>div{border:1px solid var(--line);background:#FCFAFC;border-radius:13px;padding:11px;min-width:0}
+.today-progress-grid .k{font-size:11px;color:var(--ink-2);font-weight:700}
+.today-progress-grid .v{display:block;font-size:18px;font-weight:800;line-height:1.2;margin-top:3px;overflow-wrap:anywhere}
+.today-progress-grid .s{font-size:11px;color:var(--ink-2);margin-top:3px}
+.today-next{margin-top:12px;padding:14px;border-radius:14px;background:linear-gradient(120deg,#FFF0F7,#F7EFFF);color:#6D2858;font-size:14px;line-height:1.5}
+.today-next b{color:#8C2463}
+.today-next .lead{font-size:16px;font-weight:800;margin-bottom:4px}
+.today-next .pace{font-weight:800;margin-top:7px}
 #v-today .entry{border:0;border-top:1px solid var(--line);border-radius:0;box-shadow:none;padding:18px 0 0;margin:18px 0 0;background:none}
 #v-today .entry .qrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 #v-today .entry .btn{width:100%}
@@ -453,6 +464,7 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
     </div>
     <div class="day-milestones" aria-label="Denní cíle"><div class="milestone" id="d-daily"></div><div class="milestone" id="d-flexi"></div></div>
     <div class="day-context" id="d-head"></div>
+    <div class="today-progress" aria-labelledby="today-progress-title"><h3 id="today-progress-title">Co dnešek znamená pro výplatu</h3><div class="today-progress-grid" id="today-progress-grid"></div><div class="today-next" id="today-next"></div></div>
     <div class="todayorders" id="d-orders"></div>
     <div class="flexi-block"><h3>Práce z domu</h3><div class="flexi"><div class="f" id="fx-today"><div class="k">Dnes</div><div class="v">—</div><div class="s"></div></div><div class="f" id="fx-tomorrow"><div class="k" id="fx-tomorrow-k">Příště</div><div class="v">—</div><div class="s"></div></div></div></div>
   </section>
@@ -685,6 +697,7 @@ function renderToday(){
   daily.innerHTML=`<div class="k">Denní cíl · ${fmtK(settings.daily)}</div><div class="v">${dayRev>=settings.daily?'Splněno ✓':`Chybí ${fmtK(settings.daily-dayRev)}`}</div>`;
   flexi.classList.toggle('done',dayRev>=flexiT&&isWorking(today));
   flexi.innerHTML=`<div class="k">Flexi · ${fmtK(flexiT)}</div><div class="v">${dayRev>=flexiT?(isWorking(today)?`Splněno ✓ · ${nextFlexiWord()} práce z domu`:'Limit obratu dosažen; flexi se počítá v pracovní den'):`Chybí ${fmtK(flexiT-dayRev)}`}</div>`;
+  renderTodayMotivation(s,dayRev);
   const tod=activeOrders().filter(o=>o.date===today).sort((a,b)=>b.updated_at.localeCompare(a.updated_at));
   const box=document.getElementById('d-orders');
   box.innerHTML=tod.length?tod.slice(0,6).map(o=>`<div class="to"><span><span class="ico">${o.ico||'bez IČO'}</span>${o.note?`<span class="n">${esc(o.note)}</span>`:''}</span><span class="amt num">${fmtK(o.amount)}</span></div>`).join('')+`<a href="#" class="more" onclick="showTodayOrders();return false">${tod.length>6?`+ ${tod.length-6} dalších · `:''}${tod.length} ${tod.length===1?'objednávka':(tod.length<5?'objednávky':'objednávek')} dnes – zobrazit v přehledu</a>`:'<div class="none">Dnes zatím žádná objednávka.</div>';
@@ -694,6 +707,16 @@ function renderToday(){
   document.getElementById('fx-tomorrow-k').textContent=nwd?(nwd===addDays(today,1)?'Zítra':`V ${['neděli','pondělí','úterý','středu','čtvrtek','pátek','sobotu'][fromIso(nwd).getDay()]}`):'Příště';
   if(isWorking(today))setFlexi('fx-tomorrow',dayPct>=settings.flexiPct,dayPct>=settings.flexiPct?'Nárok splněn 🏠':`chybí ${fmtK(Math.max(0,flexiT-dayRev))}`,nwd?`${nwdName} ${fmtDate(nwd)} – práce z domu`:'');
   else{setFlexi('fx-today',false,'Dnes nepracuješ',dayMark(today)?'volno':'víkend / svátek');const pw2=nwd?prevWorkingDay(nwd):null,r2=pw2?(revenueByDay(pw2.slice(0,7))[pw2]||0):0,p2=r2/settings.daily*100;setFlexi('fx-tomorrow',p2>=settings.flexiPct,p2>=settings.flexiPct?'Ano, práce z domu 🏠':'Ne',pw2?`${WD[fromIso(pw2).getDay()]} ${fmtDate(pw2)}: ${fmtP(p2)}`:'')}
+}
+function renderTodayMotivation(s,dayRev){
+  const daily=settings.daily,over=Math.max(0,dayRev-daily),pay=payout(s.revenue,s.pct),beforeRev=s.revenue-dayRev,beforePay=payout(beforeRev,s.target?beforeRev/s.target*100:0),earned=pay-beforePay;
+  const ts=tiers(),next=ts.find(t=>s.target*t.min/100>s.revenue),current=s.tier.tier,grid=document.getElementById('today-progress-grid'),goal=document.getElementById('today-next');
+  const earnLabel=dayRev?(earned>0?`+${fmtK(earned)}`:'Zatím čeká na metu'):'Začni objednávkou';
+  const earnSub=dayRev?(earned>0?'O tolik dnešní objednávky zvedly průběžnou výplatu.':next?`Při dosažení ${next.min} % by dnešní obrat nesl přibližně ${fmtK(dayRev*next.rate/100)} provize.`:'Dnešní obrat se promítne do měsíční provize.'):'Provize závisí na výsledku měsíce.';
+  grid.innerHTML=`<div><span class="k">Dnešní plnění</span><strong class="v num">${fmtK(dayRev)} z ${fmtK(daily)}</strong><div class="s">${fmtP(daily?dayRev/daily*100:0)} denního cíle</div></div><div><span class="k">Nad denní cíl</span><strong class="v num">${over?`+${fmtK(over)}`:`Chybí ${fmtK(Math.max(0,daily-dayRev))}`}</strong><div class="s">${over?'Obrat navíc posouvá měsíční pásmo.':'První krok k přeplnění dne.'}</div></div><div><span class="k">Dnešní vliv na výplatu</span><strong class="v num">${earnLabel}</strong><div class="s">${earnSub}</div></div><div><span class="k">Průběžná výplata</span><strong class="v num">${fmtK(pay)}</strong><div class="s">fix ${fmtK(settings.base)}${current?` + provize ${current.rate} %`:''}</div></div>`;
+  if(next){const need=s.target*next.min/100,missing=Math.max(0,need-s.revenue),days=s.remaining.length,targetPay=settings.base+need*next.rate/100;
+    goal.innerHTML=`<div class="lead">Další meta ${next.min} % · vyšší výplata ${fmtK(targetPay)}</div><div>Za měsíc máš <b>${fmtK(s.revenue)} z ${fmtK(s.target)}</b> (${fmtP(s.pct,1)}). Do pásma chybí <b>${fmtK(missing)}</b> obratu. Výplata by vzrostla z <b>${fmtK(pay)}</b> o <b>${fmtK(targetPay-pay)}</b>.</div><div class="pace">${days?`Plán do konce měsíce: ${fmtK(missing/days)} za zbývající pracovní den (${days} ${days===1?'den':days<5?'dny':'dní'}).`:'Žádný pracovní den už nezbývá; další objednávka může metu ještě přiblížit.'}</div>`;
+  }else{goal.innerHTML=ts.length?`<div class="lead">Nejvyšší pásmo ${ts.at(-1).min} % už máš 🎉</div><div>Za měsíc máš <b>${fmtK(s.revenue)} z ${fmtK(s.target)}</b> (${fmtP(s.pct,1)}). Každá další objednávka zvyšuje průběžnou provizi o <b>${ts.at(-1).rate} %</b> svého obratu.</div>`:'<div class="lead">Provizní pásma nastavíš v Nastavení.</div>'}
 }
 function renderGoal(s,pay){
   const ts=tiers(),next=ts.find(x=>s.target*x.min/100>s.revenue),goal=document.getElementById('d-goal');
@@ -1019,7 +1042,7 @@ function quickAdd(){const ico=document.getElementById('q-ico').value.trim();cons
   const o={id:uid(),date:todayIso(),ico,amount,note:'',deleted:false,updated_at:new Date().toISOString()};orders.push(o);queue('orders',o);lastAdd={amount,at:Date.now()};
   persist();document.getElementById('q-ico').value='';document.getElementById('q-amount').value='';render();celebrateCheck(before,beforeDay);flutterButterflies();pushPending();
   const s=monthStats(ymOf(new Date()));const dayRev=s.byDay[todayIso()]||0;const flexiT=settings.daily*settings.flexiPct/100;
-  toast(!isWorking(today)?`Objednávka za ${fmtK(amount)} zapsaná`:dayRev>=flexiT?`+${fmtK(amount)} – ${nextFlexiWord()} flexi! 🏠`:dayRev>=settings.daily?`+${fmtK(amount)} – do flexi ${fmtK(flexiT-dayRev)}`:`+${fmtK(amount)} – do cíle ${fmtK(settings.daily-dayRev)}`)}
+  toast(!isWorking(todayIso())?`Objednávka za ${fmtK(amount)} zapsaná`:dayRev>=flexiT?`+${fmtK(amount)} – ${nextFlexiWord()} flexi! 🏠`:dayRev>=settings.daily?`+${fmtK(amount)} – do flexi ${fmtK(flexiT-dayRev)}`:`+${fmtK(amount)} – do cíle ${fmtK(settings.daily-dayRev)}`)}
 document.getElementById('q-amount').addEventListener('keydown',e=>{if(e.key==='Enter')quickAdd()});
 document.getElementById('q-ico').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('q-amount').focus()});
 
