@@ -113,7 +113,17 @@ h2{font-size:15px;font-weight:700;color:var(--ink-2);margin-bottom:10px}
 .master .jump{margin-top:8px}
 .master .coach{margin:0 0 16px;background:#fff;border-color:#F3D9E6}
 .master .todayorders{margin-top:14px}
-.master-action{margin-top:12px}
+.master-earn{margin-top:14px;padding:14px;border-radius:14px;background:#fff;border:1px solid #F2D6E5}
+.master-earn .k{font-size:12px;font-weight:700;color:var(--ink-2)}
+.master-earn .v{font-size:25px;font-weight:800;line-height:1.15;margin-top:3px}
+.master-earn .s{font-size:13px;color:var(--ink-2);margin-top:5px}
+.master-goal{margin-top:10px;padding:12px 14px;border-radius:14px;background:#FCE7F1;color:#7F285C;font-size:13.5px}
+.master-goal b{font-weight:800}
+.master .entry{margin:14px 0 0;box-shadow:none;background:#fff}
+.master .entry h2{font-size:15px;margin-bottom:10px}
+.master .entry .qrow{grid-template-columns:1fr 1fr}
+.master .entry .btn{width:100%}
+.master .coach{margin:14px 0 0}
 @media (min-width:760px){.master-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}.master-path{border-left:1px solid #EED8E8;padding-left:24px}}
 
 svg.chart{width:100%;height:auto;display:block;overflow:visible}
@@ -316,16 +326,25 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
 
   <section class="card master" aria-label="Dnešní plnění a cesta k vyšší provizi">
     <div class="master-head"><h2>Dnes k vyšší výplatě</h2><span class="small muted num" id="d-head"></span></div>
-    <div class="coach" id="t-coach"></div>
     <div class="master-grid">
       <div class="master-day">
         <h2>Plnění dnes</h2>
-        <div class="master-day-value num" id="d-value">0 %</div>
+        <div class="master-day-value num" id="d-value">Začínáme</div>
         <div class="master-day-label num" id="d-pct"></div>
         <div class="bar"><i id="d-fill"></i><em style="left:76.9%" title="100 %"></em><em class="gold" style="left:100%;transform:translateX(-2px)" title="130 %"></em></div>
         <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-2);margin-top:6px"><span>0</span><span class="num" id="d-l100"></span><span class="num" id="d-l130"></span></div>
+        <div class="master-earn"><div class="k" id="d-earn-k"></div><div class="v num" id="d-earn-v"></div><div class="s" id="d-earn-s"></div></div>
+        <div class="master-goal" id="d-goal"></div>
+        <div class="card entry" id="quick-entry">
+          <h2>Nová objednávka</h2>
+          <div class="qrow">
+            <input id="q-ico" inputmode="numeric" list="ico-list" placeholder="IČO" maxlength="12" autocomplete="off" aria-label="IČO">
+            <input id="q-amount" inputmode="decimal" placeholder="Kč" aria-label="Hodnota objednávky v Kč">
+          </div>
+          <button class="btn block" onclick="quickAdd()">Přidat objednávku</button>
+          <div class="qsub"><span class="faint small">Zapíše se k dnešku · jiný den nebo poznámku zadáš v <a href="#" onclick="go('orders');return false">Objednávkách</a></span></div>
+        </div>
         <div class="todayorders" id="d-orders"></div>
-        <button class="btn master-action" onclick="document.getElementById('q-ico').scrollIntoView({behavior:'smooth',block:'center'});document.getElementById('q-ico').focus({preventScroll:true})">Přidat objednávku</button>
       </div>
       <div class="master-path path">
         <h2>Cesta k vyšší provizi</h2>
@@ -333,6 +352,7 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
         <div class="jump" id="t-jump" style="display:none"></div>
       </div>
     </div>
+    <div class="coach" id="t-coach"></div>
   </section>
 
   <div class="hero thermo">
@@ -357,17 +377,6 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
   <div class="zones2">
   <section class="zone zone-day">
     <div class="zone-h"><span class="zone-t">Dnes</span></div>
-
-    <div class="card entry" id="quick-entry">
-      <h2>Nová objednávka</h2>
-      <div class="qrow">
-        <input id="q-ico" inputmode="numeric" list="ico-list" placeholder="IČO" maxlength="12" autocomplete="off">
-        <input id="q-amount" inputmode="decimal" placeholder="Kč">
-      </div>
-      <button class="btn block" onclick="quickAdd()">Přidat objednávku</button>
-      <div class="qsub"><span class="faint small">Zapíše se k dnešku · jiný den nebo poznámku zadáš v <a href="#" onclick="go('orders');return false">Objednávkách</a></span></div>
-    </div>
-
     <div class="card">
       <h2>Práce z domu (flexi)</h2>
       <div class="flexi">
@@ -626,7 +635,7 @@ function renderToday(){
   const pay=payout(s.revenue,s.pct);
   document.getElementById('t-pay').textContent=fmtK(pay);
   const t=s.tier.tier;
-  document.getElementById('t-paysub').textContent=t?`základ ${fmtK(settings.base)} + provize ${t.rate} % z ${fmtK(s.revenue)}`:`základ ${fmtK(settings.base)}, provize zatím 0 (plnění pod ${tiers()[0].min} %)`;
+  document.getElementById('t-paysub').textContent=t?`základ ${fmtK(settings.base)} + provize ${t.rate} % z ${fmtK(s.revenue)}`:`fixní mzda ${fmtK(settings.base)} · první provize od ${tiers()[0].min} % měsíčního plnění`;
   document.getElementById('t-monthsum').textContent=`${fmtK(s.revenue)} z ${fmtK(s.target)}`;
   // thermometer 0..150
   const MAX=150; const ts=tiers(); const zones=document.getElementById('t-zones'); zones.innerHTML='';
@@ -650,11 +659,22 @@ function renderToday(){
 
   // day bar (100% at 76.9% of width => bar max is 130%)
   const flexiT=settings.daily*settings.flexiPct/100;
-  document.getElementById('d-value').textContent=fmtP(dayPct);
+  document.getElementById('d-value').textContent=dayRev?fmtP(dayPct):'Začínáme';
   document.getElementById('d-fill').style.width=Math.min(dayRev/flexiT,1)*100+'%';
   document.getElementById('d-fill').style.background=dayPct>=settings.flexiPct?'var(--t3)':(dayPct>=100?'var(--t2)':'var(--t1)');
-  document.getElementById('d-pct').textContent=!isWorking(today)?`${dayMark(today)?'Dnes máš volno':'Dnes je víkend nebo svátek'} · zaznamenaný obrat ${fmtK(dayRev)}`:dayRev>=flexiT?`${fmtK(dayRev)} obratu · flexi ${nextFlexiWord()} splněno, vše navíc zvyšuje provizi`:dayRev>=settings.daily?`${fmtK(dayRev)} obratu · do ${settings.flexiPct} % a flexi zbývá ${fmtK(flexiT-dayRev)}`:`${fmtK(dayRev)} obratu · do denního cíle zbývá ${fmtK(settings.daily-dayRev)}`;
+  document.getElementById('d-pct').textContent=!isWorking(today)?`${dayMark(today)?'Dnes máš volno':'Dnes je víkend nebo svátek'} · ${fmtP(dayPct)} splněno`:dayRev>=flexiT?`${fmtK(dayRev)} obratu · ${fmtP(dayPct)} splněno · flexi ${nextFlexiWord()}`:dayRev>=settings.daily?`${fmtK(dayRev)} obratu · ${fmtP(dayPct)} splněno · do flexi ${fmtK(flexiT-dayRev)}`:`${fmtP(dayPct)} splněno · do denního cíle ${fmtK(settings.daily-dayRev)}`;
   document.getElementById('d-head').textContent=isWorking(today)?`denní cíl ${fmtK(settings.daily)}`:(dayMark(today)?'volno':'víkend / svátek');
+  const beforeTodayRev=s.revenue-dayRev;
+  const beforeTodayPay=payout(beforeTodayRev,s.target?beforeTodayRev/s.target*100:0);
+  const todayPayGain=pay-beforeTodayPay;
+  const earnK=document.getElementById('d-earn-k'),earnV=document.getElementById('d-earn-v'),earnS=document.getElementById('d-earn-s');
+  if(t){earnK.textContent='Průběžná provize nad fix';earnV.textContent='+'+fmtK(pay-settings.base);earnS.textContent=dayRev?(todayPayGain>0?`Dnešní objednávky ji zvýšily o ${fmtK(todayPayGain)}.`:`Dnes jsi přidala ${fmtK(dayRev)} obratu k měsíčnímu výsledku.`):'První dnešní objednávka může provizi dál zvýšit.'}
+  else{earnK.textContent='Fixní mzda v modelu';earnV.textContent=fmtK(settings.base);earnS.textContent=dayRev?`Dnešní obrat ${fmtK(dayRev)} tě přiblížil k první provizi.`:'První objednávka tě posune k provizi nad fix.'}
+  const nextTier=ts.find(x=>s.target*x.min/100>s.revenue);
+  const goal=document.getElementById('d-goal');
+  if(nextTier){const missing=s.target*nextTier.min/100-s.revenue;const perDay=s.remaining.length?missing/s.remaining.length:null;const gain=settings.base+s.target*nextTier.min/100*nextTier.rate/100-pay;
+    goal.innerHTML=`<b>Další meta ${nextTier.min} %:</b> chybí <b>${fmtK(missing)}</b> obratu${perDay!==null?` · průměrně <b>${fmtK(perDay)} za zbývající pracovní den</b>`:''}. Při dosažení této mety by průběžná výplata stoupla o <b>${fmtK(gain)}</b>.`}
+  else{const top=ts[ts.length-1];goal.innerHTML=top?`<b>Nejvyšší pásmo splněno.</b> Každá další objednávka teď přidává ${top.rate} % svého obratu k průběžné provizi.`:'Provizní pásma nastavíš v Nastavení.'}
   {const tod=activeOrders().filter(o=>o.date===today).sort((a,b)=>b.updated_at.localeCompare(a.updated_at));const box=document.getElementById('d-orders');
    box.innerHTML=tod.length?tod.slice(0,6).map(o=>`<div class="to"><span><span class="ico">${o.ico||'bez IČO'}</span>${o.note?`<span class="n">${esc(o.note)}</span>`:''}</span><span class="amt num">${fmtK(o.amount)}</span></div>`).join('')+`<a href="#" class="more" onclick="go('orders');return false">${tod.length>6?`+ ${tod.length-6} dalších · `:''}${tod.length} ${tod.length===1?'objednávka':(tod.length<5?'objednávky':'objednávek')} dnes – upravit</a>`:`<div class="none">Dnes zatím žádná objednávka.</div>`}
   document.getElementById('d-l100').textContent=fmtN(settings.daily); document.getElementById('d-l130').textContent=fmtN(flexiT);
