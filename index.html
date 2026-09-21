@@ -457,6 +457,50 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
 @keyframes wing-fast{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.38)}}
 @media (max-width:559px){.butterfly-orbit.orbit-one{left:-32%;top:17%}.butterfly-orbit.orbit-two{right:-35%;top:62%}}
 @media (prefers-reduced-motion:reduce){.butterfly-orbit,.butterfly-orbit .butterfly,.butterfly-orbit .wing-left,.butterfly-orbit .wing-right{animation:none!important}}
+/* Compact daily flow: entry, trend, daily budgets, flexi. */
+#v-today>.card{padding:16px;margin:0 0 10px;border-radius:17px}
+#v-today .entry{border:0;margin:0;padding:0}
+.entry-heading{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.entry-heading #t-date{font-size:11px;text-align:right}
+#v-today .entry .qrow{gap:8px;margin:8px 0}
+#v-today .entry input{min-width:0;padding:10px 12px}
+#v-today .entry .btn{padding:11px}
+#v-today .entry .coach{background:none;border:0;box-shadow:none;margin:8px 0 0;padding:0}
+#v-today .entry .coach .l1{font-size:12px}#v-today .entry .coach .l2{display:none}
+#v-today .entry .coach::after{display:none}
+#v-today .loginhint{padding:6px 8px;margin:8px 0 0;font-size:11px}
+#v-today h2{font-size:17px;margin:0 0 8px}
+#v-today .trend-card,#v-orders .trend-card{border:0;margin:0;padding:0}
+#v-today .trend-svg{max-height:95px}
+#v-today .trend-verdict{font-size:11px;line-height:1.4;margin-top:5px}
+#v-today .trend-title{font-size:12px}
+#v-today .tier-board{gap:8px;margin:8px 0 0}
+#v-today #today-sales{font-size:11px;margin:0 0 6px}
+.daily-board .tier-row{padding:10px 12px}
+.daily-board .tier-row.main{padding:12px 14px}
+.daily-board .tier-row-head{align-items:center;gap:6px}
+.daily-board .tier-row-head span{font-size:10px}
+.daily-board .tier-row.main .tier-row-head b{font-size:18px}
+.daily-board .day-tier-value{font-size:19px;line-height:1.25;font-weight:800;margin:6px 0}
+.daily-board .main .day-tier-value{font-size:25px}
+.daily-board .day-tier-value small{font-size:12px;font-weight:500;color:var(--ink-2)}
+.daily-board .day-tier-rest{font-size:12px;font-weight:700;margin-top:5px}
+.daily-board .tier-row-foot{font-size:10px!important;font-weight:400!important;color:var(--ink-2)!important;margin-top:4px}
+.daily-board .tier-bar{height:7px;margin-top:5px}
+.daily-board .minor{padding:8px 11px;background:#FBFAFB;border-color:#EEE8ED}
+.daily-board .minor .tier-row-head b{font-size:12px}
+.daily-board .minor .day-tier-value{font-size:14px;margin:3px 0}
+.daily-board .minor .day-tier-value small,.daily-board .minor .day-tier-rest{font-size:10px}
+.daily-board .minor .tier-bar{height:4px}
+.daily-board .secondary{background:#F9F3FF}
+#v-today .flexi-block{border-top:1px solid var(--line)}
+#v-today .flexi{gap:8px;margin:0}#v-today .flexi .f{padding:10px}
+#v-today .flexi .v{font-size:15px}#v-today .flexi .s{font-size:11px}
+#v-today .today-order-details summary{font-size:13px;font-weight:700;cursor:pointer}
+.fund-counts{grid-template-columns:repeat(4,minmax(0,1fr))}
+.cal .d.vacation{background:#FCE4F0;border-color:#D283AC}.cal .d.leave{background:#FFF0D3;border-color:#D3A457}
+.cal .d .m{font-size:9px;letter-spacing:0;text-transform:none}
+@media(max-width:559px){#app{padding-left:10px;padding-right:10px}.entry-heading{align-items:flex-start}.entry-heading #t-date{max-width:125px}.tier-row-body{flex-wrap:wrap;gap:3px}.fund-counts>div{padding:8px 4px}.fund-counts span{font-size:10px}}
 </style>
 </head>
 <body>
@@ -476,32 +520,32 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
 
 <!-- ===== DNES ===== -->
 <section class="view active" id="v-today">
-  <header class="today-head"><div class="top"><div><h1 id="t-greet">Dobrý den</h1><div class="date" id="t-date"></div></div><div class="flexi-badge" id="t-flexibadge"></div></div></header>
-  <div class="coach" id="t-coach" role="status" aria-live="polite"></div>
-  <div class="loginhint" id="loginhint" style="display:none">Nejsi přihlášená – objednávky se ukládají jen v tomto prohlížeči. <a href="#" onclick="go('settings');return false">Přihlásit se</a></div>
-  <section class="card day-card" aria-labelledby="day-title">
-    <div class="section-eyebrow">DNEŠEK</div>
-    <h2 id="day-title">Cesta k vyšší výplatě</h2>
-    <p class="small muted" id="today-sales"></p>
-    <div class="tier-board" id="today-tier-board"></div>
-    <div class="trend-card" id="today-trend"></div>
+  <section class="card day-entry">
     <div class="entry" id="quick-entry">
-      <h3>Nová objednávka</h3>
+      <div class="entry-heading"><h2>Nová objednávka</h2><span class="small muted" id="t-date"></span></div>
       <div class="qrow"><input id="q-ico" inputmode="numeric" list="ico-list" placeholder="IČO" maxlength="12" autocomplete="off" aria-label="IČO"><input id="q-amount" inputmode="decimal" placeholder="Hodnota v Kč" aria-label="Hodnota objednávky v Kč" oninput="renderOrderPreview()"></div>
       <div class="order-preview" id="quick-preview" aria-live="polite"></div>
       <button class="btn block" onclick="quickAdd()">Přidat objednávku</button>
-      <div class="qsub"><span class="faint small">Zapíše se k dnešku · jiný den nebo poznámku zadáš v <a href="#" onclick="go('orders');return false">Měsíčním přehledu</a></span></div>
+      <div class="coach" id="t-coach" role="status" aria-live="polite"></div>
     </div>
-    <div class="todayorders" id="d-orders"></div>
-    <div class="flexi-block"><h3>Práce z domu</h3><div class="flexi"><div class="f" id="fx-today"><div class="k">Dnes</div><div class="v">—</div><div class="s"></div></div><div class="f" id="fx-tomorrow"><div class="k" id="fx-tomorrow-k">Příště</div><div class="v">—</div><div class="s"></div></div></div></div>
+    <div class="loginhint" id="loginhint" style="display:none">Objednávky jsou jen v tomto prohlížeči. <a href="#" onclick="go('settings');return false">Přihlásit se</a></div>
   </section>
+  <section class="card"><div class="trend-card" id="today-trend"></div></section>
+  <section class="card day-card" aria-labelledby="day-title">
+    <h2 id="day-title">Dnešní cesta k výplatě</h2>
+    <p class="small muted" id="today-sales"></p>
+    <div class="tier-board daily-board" id="today-tier-board"></div>
+  </section>
+  <section class="card flexi-block"><h2>Práce z domu <span id="t-flexibadge"></span></h2><div class="flexi"><div class="f" id="fx-today"><div class="k">Dnes</div><div class="v">—</div><div class="s"></div></div><div class="f" id="fx-tomorrow"><div class="k" id="fx-tomorrow-k">Příště</div><div class="v">—</div><div class="s"></div></div></div></section>
+  <details class="card today-order-details"><summary>Dnešní objednávky</summary><div class="todayorders" id="d-orders"></div></details>
 </section>
 
 <!-- ===== MĚSÍČNÍ PŘEHLED ===== -->
 <section class="view" id="v-orders">
   <div class="top"><h1>Měsíční přehled</h1></div>
+  <section class="card" aria-labelledby="month-review-title"><h2 id="month-review-title">Zhodnocení měsíce</h2><p class="small muted" id="month-current-pay"></p><div class="trend-card" id="month-trend"></div><div class="tier-board" id="month-tier-board"></div></section>
   <section class="card"><h2>Nová objednávka</h2><input type="hidden" id="o-id"><div class="form"><div><label class="fld" for="o-date">Datum</label><input type="date" id="o-date" onchange="renderOrderPreview()"></div><div><label class="fld" for="o-ico">IČO</label><input id="o-ico" inputmode="numeric" list="ico-list" placeholder="8 číslic" maxlength="12" autocomplete="off"><datalist id="ico-list"></datalist></div><div><label class="fld" for="o-amount">Hodnota (Kč)</label><input id="o-amount" inputmode="decimal" placeholder="0" oninput="renderOrderPreview()"></div><div><label class="fld" for="o-note">Poznámka</label><input id="o-note" placeholder="volitelné"></div><div class="full order-preview" id="full-preview" aria-live="polite"></div><div class="full" style="display:flex;gap:8px"><button class="btn" id="o-save" onclick="saveOrder()">Uložit objednávku</button><button class="btn ghost" id="o-cancel" onclick="resetForm()" style="display:none">Zrušit úpravu</button></div></div></section>
-  <section class="card" aria-labelledby="month-review-title"><h2 id="month-review-title">Zhodnocení měsíce</h2><p class="small muted" id="month-current-pay"></p><div class="tier-board" id="month-tier-board"></div><div class="trend-card" id="month-trend"></div></section>
+
   <section class="card overview-calendar" aria-labelledby="oc-heading">
     <h2 id="oc-heading">Kalendář objednávek</h2>
     <p class="small muted calendar-key">V každém dni: počet objednávek · obrat · orientační provize</p>
@@ -512,7 +556,7 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
     <p class="small faint">Provize v kalendáři je orientační podíl z obratu dne při aktuálním pásmu měsíce. Konečný výdělek závisí na výsledku celého měsíce.</p>
   </section>
 
-  <section class="card period-card" aria-labelledby="period-title"><h2 id="period-title">Vybrané objednávky</h2><p id="o-period-label" class="muted small"></p><div class="period-stats" id="o-period-stats"></div></section>
+
   <div class="filter"><input id="o-filter" placeholder="Hledat IČO, částku, poznámku" oninput="render()"><button class="btn soft sm" onclick="exportXLSX('selected')" title="Uložit vybrané objednávky do Excelu">Excel</button></div>
   <div class="olist" id="o-list"></div>
   <section class="card months"><h2>Historie měsíců</h2><div id="c-months"></div></section>
@@ -523,7 +567,7 @@ code{font-size:12.5px;background:var(--t0-soft);padding:2px 6px;border-radius:6p
   <div class="top"><h1>Pracovní fond</h1></div>
   <div class="mdash">
     <section class="card"><h2>Pásma podle pracovního fondu</h2><div id="fund-summary"></div><div class="tier-board" id="fund-tier-board"></div></section>
-    <section class="card m-cal"><h2>Pracovní dny a volno</h2><div class="cal-head"><button class="btn ghost sm" onclick="shiftMonth(-1)" aria-label="Předchozí měsíc">‹</button><b id="c-title"></b><button class="btn ghost sm" onclick="shiftMonth(1)" aria-label="Další měsíc">›</button></div><div class="cal" id="c-grid"></div><p class="small muted">Klepnutím označíš pracovní den jako volno. Dalším klepnutím označení zrušíš. Pásma se hned přepočítají.</p></section>
+    <section class="card m-cal"><h2>Pracovní dny a volno</h2><div class="cal-head"><button class="btn ghost sm" onclick="shiftMonth(-1)" aria-label="Předchozí měsíc">‹</button><b id="c-title"></b><button class="btn ghost sm" onclick="shiftMonth(1)" aria-label="Další měsíc">›</button></div><div class="cal" id="c-grid"></div><p class="small muted">1. klik: dovolená (sníží měsíční cíl). 2. klik: volno (cíl zůstává, ubude pracovní den). 3. klik: pracovní den.</p></section>
   </div>
 </section>
 
@@ -659,6 +703,7 @@ function dayMark(s){return days.find(x=>x.date===s&&!x.deleted)}
 function isWorking(s){return !isWeekend(s)&&!isHoliday(s)&&!dayMark(s)}
 function monthDays(ym){const [y,m]=ym.split('-').map(Number);const n=new Date(y,m,0).getDate();const a=[];for(let d=1;d<=n;d++)a.push(y+'-'+pad(m)+'-'+pad(d));return a}
 function workingDays(ym){return monthDays(ym).filter(isWorking)}
+function targetDays(ym){return monthDays(ym).filter(d=>!isWeekend(d)&&!isHoliday(d)&&dayMark(d)?.kind!=='dovolena')}
 function prevWorkingDay(s){let d=s;for(let i=0;i<40;i++){d=addDays(d,-1);if(!isWeekend(d)&&!isHoliday(d)&&!dayMark(d))return d}return null}
 function nextWorkingDay(s){let d=s;for(let i=0;i<40;i++){d=addDays(d,1);if(!isWeekend(d)&&!isHoliday(d)&&!dayMark(d))return d}return null}
 
@@ -679,7 +724,7 @@ function tierFor(pct){let t=null,idx=0;tiers().forEach((x,i)=>{if(pct>=x.min){t=
 function payout(revenue,pct){const {tier}=tierFor(pct);return settings.base+(tier?revenue*tier.rate/100:0)}
 
 function monthStats(ym){
-  const wd=workingDays(ym); const target=wd.length*settings.daily;
+  const wd=workingDays(ym),fund=targetDays(ym); const target=fund.length*settings.daily;
   const byDay=revenueByDay(ym); const revenue=Object.values(byDay).reduce((a,b)=>a+b,0);
   const pct=target>0?revenue/target*100:0;
   const today=todayIso();
@@ -689,7 +734,7 @@ function monthStats(ym){
   const last=elapsed.slice(-5); const avg=last.length?last.reduce((a,d)=>a+(byDay[d]||0),0)/last.length:0;
   const remainingAfterToday=wd.filter(d=>d>today).length;
   const forecast=revenue+avg*remainingAfterToday+(wd.includes(today)&&!byDay[today]?avg:0);
-  return {ym,wd,target,byDay,revenue,pct,elapsed,remaining,remainingAfterToday,planToDate,avg,forecast,tier:tierFor(pct)};
+  return {ym,wd,fund,target,byDay,revenue,pct,elapsed,remaining,remainingAfterToday,planToDate,avg,forecast,tier:tierFor(pct)};
 }
 
 /* ================= RENDER: TODAY ================= */
@@ -701,10 +746,9 @@ function render(){
 function renderToday(){
   const today=todayIso(),s=monthStats(ymOf(new Date()));
   document.getElementById('t-date').textContent=fmtDateFull(today);
-  document.getElementById('t-greet').textContent=greeting();
   const pwd=prevWorkingDay(today),prevRev=pwd?(revenueByDay(pwd.slice(0,7))[pwd]||0):0;
   document.getElementById('t-flexibadge').textContent=(isWorking(today)&&prevRev>=settings.daily*settings.flexiPct/100)?'Dnes flexi 🏠':'';
-  renderCoach(s);renderTierBoard('today-tier-board',s);renderTrend('today-trend',s);renderOrderPreview();
+  renderCoach(s);renderTierBoard('today-tier-board',s,true);renderTrend('today-trend',s);renderOrderPreview();
   const dayRev=s.byDay[today]||0,dayPct=dayRev/settings.daily*100,flexiT=settings.daily*settings.flexiPct/100;
   document.getElementById('today-sales').textContent=`Dnes zapsáno ${fmtK(dayRev)} · průběžná výplata ${fmtK(payout(s.revenue,s.pct))}`;
   const tod=activeOrders().filter(o=>o.date===today).sort((a,b)=>b.updated_at.localeCompare(a.updated_at));
@@ -715,19 +759,34 @@ function renderToday(){
   const nwd=nextWorkingDay(today),nwdName=nwd?WD[fromIso(nwd).getDay()]:'';
   document.getElementById('fx-tomorrow-k').textContent=nwd?(nwd===addDays(today,1)?'Zítra':`V ${['neděli','pondělí','úterý','středu','čtvrtek','pátek','sobotu'][fromIso(nwd).getDay()]}`):'Příště';
   if(isWorking(today))setFlexi('fx-tomorrow',dayPct>=settings.flexiPct,dayPct>=settings.flexiPct?'Nárok splněn 🏠':`chybí ${fmtK(Math.max(0,flexiT-dayRev))}`,nwd?`${nwdName} ${fmtDate(nwd)} – práce z domu`:'');
-  else{setFlexi('fx-today',false,'Dnes nepracuješ',dayMark(today)?'volno':'víkend / svátek');const pw2=nwd?prevWorkingDay(nwd):null,r2=pw2?(revenueByDay(pw2.slice(0,7))[pw2]||0):0,p2=r2/settings.daily*100;setFlexi('fx-tomorrow',p2>=settings.flexiPct,p2>=settings.flexiPct?'Ano, práce z domu 🏠':'Ne',pw2?`${WD[fromIso(pw2).getDay()]} ${fmtDate(pw2)}: ${fmtK(r2)}`:'')}
+  else{setFlexi('fx-today',false,'Dnes nepracuješ',dayMark(today)?(dayMark(today).kind==='dovolena'?'dovolená':'volno'):'víkend / svátek');const pw2=nwd?prevWorkingDay(nwd):null,r2=pw2?(revenueByDay(pw2.slice(0,7))[pw2]||0):0,p2=r2/settings.daily*100;setFlexi('fx-tomorrow',p2>=settings.flexiPct,p2>=settings.flexiPct?'Ano, práce z domu 🏠':'Ne',pw2?`${WD[fromIso(pw2).getDay()]} ${fmtDate(pw2)}: ${fmtK(r2)}`:'')}
 }
 function primaryTier(s){const all=tiers(),higher=all.find(t=>t.min>=136)||all.at(-1),standard=all.find(t=>t.min>=100)||higher;return s.pct>=100?higher:standard}
 function remainingDays(s){return s.ym===ymOf(new Date())?s.wd.filter(d=>d>=todayIso()).length:s.ym>ymOf(new Date())?s.wd.length:0}
-function tierBoardMarkup(s){
+function dailyTierStats(s,t){
+  const today=todayIso(),revenue=s.byDay[today]||0,monthTarget=s.target*t.min/100;
+  const beforeToday=s.revenue-revenue,working=s.wd.includes(today),slots=remainingDays(s);
+  const target=working&&slots?Math.max(0,monthTarget-beforeToday)/slots:null;
+  return {revenue,target,working,monthTarget,monthMissing:Math.max(0,monthTarget-s.revenue),slots};
+}
+function dailyTierMarkup(s,t,main){
+  const d=dailyTierStats(s,t),monthDone=d.monthMissing<=0,done=d.target!==null&&d.revenue>=d.target;
+  const progress=d.target===null?(d.monthTarget?Math.max(0,Math.min(100,s.revenue/d.monthTarget*100)):0):d.target>0?Math.max(0,Math.min(100,d.revenue/d.target*100)):100;
+  const status=monthDone?'Pásmo splněno ✓':d.working?(done?'Dnešní tempo splněno ✓':'Dnešní tempo'):'Dnes bez pracovního cíle';
+  const primary=d.target!==null?`${fmtK(d.revenue)} <small>z ${fmtK(d.target)} dnes</small>`:`${fmtK(d.revenue)} <small>dnes navíc</small>`;
+  const rest=d.target!==null?(d.target===0?'Měsíční meta už byla splněna.':done?`Dnes nad tempem +${fmtK(d.revenue-d.target)}`:`Dnes zbývá ${fmtK(Math.max(0,d.target-d.revenue))}`):d.slots?`Na další pracovní den: ${fmtK(d.monthMissing/d.slots)}`:'Další pracovní den v měsíci nezbývá.';
+  return `<div class="tier-row ${t===main?'main':t.min<100?'minor':'secondary'}${monthDone?' complete':''}"><div class="tier-row-head"><b>${t.min} %${t===main?' · hlavní meta':''}</b><span>${status}</span></div><div class="day-tier-value">${primary}</div><div class="tier-bar" role="img" aria-label="${d.working?'Dnešní tempo':'Měsíční meta'} pro ${t.min} %: ${fmtP(progress)}"><span style="width:${progress}%"></span></div><div class="day-tier-rest">${rest}</div><div class="tier-row-foot">Měsíc: ${fmtK(s.revenue)} / ${fmtK(d.monthTarget)}${monthDone?' · splněno':` · zbývá ${fmtK(d.monthMissing)}`}</div></div>`;
+}
+function tierBoardMarkup(s,daily=false){
   const main=primaryTier(s),all=tiers(),ordered=[main,...all.filter(t=>t!==main).sort((a,b)=>b.min-a.min)],days=remainingDays(s);
+  if(daily)return ordered.map(t=>dailyTierMarkup(s,t,main)).join('');
   return ordered.map(t=>{const target=s.target*t.min/100,missing=Math.max(0,target-s.revenue),done=missing<=0,pct=target?Math.min(100,s.revenue/target*100):0,pay=settings.base+target*t.rate/100;
     return `<div class="tier-row${t===main?' main':''}${done?' complete':''}"><div class="tier-row-head"><b>${t.min} % ${t===main?'· hlavní meta':''}</b><span>${done?'Splněno ✓':`${fmtP(pct)} cesty`}</span></div><div class="tier-bar" role="img" aria-label="Pásmo ${t.min} %, splněno ${fmtP(pct)}"><span style="width:${pct}%"></span></div><div class="tier-row-body"><strong>${fmtK(s.revenue)} z ${fmtK(target)}</strong><span>${done?'Meta dosažena':`Chybí ${fmtK(missing)}`}</span></div><div class="tier-row-foot">${done?`Výplata při hranici ${fmtK(pay)} · provize ${t.rate} %`:days?`Potřeba ${fmtK(missing/days)} za zbývající pracovní den · výplata při hranici ${fmtK(pay)}`:`Potřeba ${fmtK(missing)} obratu · výplata při hranici ${fmtK(pay)}`}</div></div>`
   }).join('')
 }
-function renderTierBoard(id,s){document.getElementById(id).innerHTML=tierBoardMarkup(s)}
+function renderTierBoard(id,s,daily=false){document.getElementById(id).innerHTML=tierBoardMarkup(s,daily)}
 function forecastMonth(s){
-  const now=todayIso(),isCurrent=s.ym===ymOf(new Date());if(!isCurrent)return {value:s.revenue,ready:true,actual:true};
+  const now=todayIso(),isCurrent=s.ym===ymOf(new Date());if(!isCurrent)return s.ym<ymOf(new Date())?{value:s.revenue,ready:true,actual:true}:{value:null,ready:false,actual:false};
   const done=s.wd.filter(d=>d<now||(d===now&&(s.byDay[d]||0)>0));
   if(done.length<3)return {value:null,ready:false,actual:false};
   const left=s.wd.filter(d=>d>now||(d===now&&(s.byDay[d]||0)===0)).length;
@@ -807,11 +866,6 @@ function renderOrders(){
   renderOrderPreview();
   renderOrderCalendar();renderOverviewMonth();renderHistory();
   const list=filteredOrders().sort((a,b)=>b.date.localeCompare(a.date)||b.updated_at.localeCompare(a.updated_at));
-  const period=orderFilter.mode==='month'?`${MONTHS[Number(ordersMonth.slice(5))-1]} ${ordersMonth.slice(0,4)}`:orderFilter.mode==='day'?fmtDateFull(orderFilter.start):`${fmtDate(orderFilter.start)} – ${fmtDateFull(orderFilter.end)}`;
-  document.getElementById('o-period-label').textContent=period+(document.getElementById('o-filter').value.trim()?' · výsledky hledání':'');
-  const rev=list.reduce((a,o)=>a+Number(o.amount),0),byMonth={};for(const o of list)(byMonth[o.date.slice(0,7)]||=[]).push(o);
-  const commission=Object.entries(byMonth).reduce((sum,[ym,items])=>sum+items.reduce((a,o)=>a+Number(o.amount),0)*(monthStats(ym).tier.tier?.rate||0)/100,0);
-  document.getElementById('o-period-stats').innerHTML=`<div><span>Objednávky</span><b class="num">${list.length}</b></div><div><span>Obrat</span><b class="num">${fmtK(rev)}</b></div><div><span>Orientační provize*</span><b class="num">${fmtK(commission)}</b></div><p>*Podíl z vybraného obratu při aktuálním pásmu příslušného měsíce; bez fixní mzdy.</p>`;
   const el=document.getElementById('o-list');if(!list.length){el.innerHTML='<div class="empty">Pro tento výběr nejsou žádné objednávky.</div>';return}
   let html='',cur='';for(const o of list){if(o.date!==cur){cur=o.date;const sum=list.filter(x=>x.date===cur).reduce((a,x)=>a+Number(x.amount),0);html+=`<div class="oday"><span>${fmtDateFull(cur)}</span><span class="num">${fmtK(sum)}</span></div>`}
     html+=`<div class="oitem" id="oi-${o.id}" onclick="this.classList.toggle('open')"><div><div class="ico">${o.ico?esc(o.ico):'<span class="faint">bez IČO</span>'}</div>${o.note?`<div class="note">${esc(o.note)}</div>`:''}</div><div class="amt num">${fmtK(o.amount)}</div><div class="acts"><button class="btn soft sm" onclick="event.stopPropagation();editOrder('${o.id}')">Upravit</button><button class="btn danger sm" onclick="event.stopPropagation();delOrder('${o.id}')">Smazat</button></div></div>`}
@@ -822,9 +876,12 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 
 /* ================= MONTH ================= */
 function shiftMonth(n){const [y,m]=viewMonth.split('-').map(Number);viewMonth=ymOf(new Date(y,m-1+n,1));renderMonth()}
-const KINDS=[null,'volno'];
-let lastMarkClick={d:'',t:0};
-function cycleMark(s){const tnow=Date.now();if(lastMarkClick.d===s&&tnow-lastMarkClick.t<450)return;lastMarkClick={d:s,t:tnow};const cur=dayMark(s);const now=new Date().toISOString();if(cur){cur.deleted=true;cur.updated_at=now;queue('day_marks',cur);const i=KINDS.indexOf(cur.kind);if(i<KINDS.length-1){const n={id:uid(),date:s,kind:KINDS[i+1],deleted:false,updated_at:now};days.push(n);queue('day_marks',n)}}else{const n={id:uid(),date:s,kind:KINDS[1],deleted:false,updated_at:now};days.push(n);queue('day_marks',n)}persist();renderMonth();pushPending()}
+const KINDS=[null,'dovolena','volno'];
+function cycleMark(s){if(isWeekend(s)||isHoliday(s))return;const cur=dayMark(s),next=KINDS[(Math.max(0,KINDS.indexOf(cur?.kind||null))+1)%KINDS.length],now=new Date().toISOString();
+  if(cur){cur.kind=next||cur.kind;cur.deleted=!next;cur.updated_at=now;queue('day_marks',cur)}
+  else{const n={id:uid(),date:s,kind:next,deleted:false,updated_at:now};days.push(n);queue('day_marks',n)}
+  persist();renderMonth();pushPending();
+}
 function renderMonth(){
   const [y,m]=viewMonth.split('-').map(Number),s=monthStats(viewMonth),today=todayIso();
   document.getElementById('c-title').textContent=MONTHS[m-1]+' '+y;
@@ -832,13 +889,14 @@ function renderMonth(){
   let html=['Po','Út','St','Čt','Pá','So','Ne'].map(w=>`<div class="wd">${w}</div>`).join('');
   for(let i=0;i<off;i++)html+='<div class="d empty"></div>';
   for(const d of monthDays(viewMonth)){
-    const we=isWeekend(d),ho=isHoliday(d),mk=dayMark(d);let cls='d';if(we)cls+=' off';if(ho)cls+=' hol';if(mk)cls+=' mark';if(d===today)cls+=' today';
-    const inner=`${fromIso(d).getDate()}${mk?'<span class="m">VOLNO</span>':''}`;
-    html+=(we||ho)?`<div class="${cls}" title="${ho?(HOLNAMES[d.slice(5)]||'Velikonoce'):''}">${inner}</div>`:`<button class="${cls}" onclick="cycleMark('${d}')" aria-label="${fmtDateFull(d)}${mk?', volno':''}">${inner}</button>`;
+    const we=isWeekend(d),ho=isHoliday(d),mk=dayMark(d);let cls='d';if(we)cls+=' off';if(ho)cls+=' hol';if(mk)cls+=' mark '+(mk.kind==='dovolena'?'vacation':'leave');if(d===today)cls+=' today';
+    const label=mk?(mk.kind==='dovolena'?'Dovolená':'Volno'):'';
+    const inner=`${fromIso(d).getDate()}${mk?`<span class="m">${label}</span>`:''}`;
+    html+=(we||ho)?`<div class="${cls}" title="${ho?(HOLNAMES[d.slice(5)]||'Velikonoce'):''}">${inner}</div>`:`<button class="${cls}" onclick="cycleMark('${d}')" aria-label="${fmtDateFull(d)}${mk?', '+label:''}">${inner}</button>`;
   }
   document.getElementById('c-grid').innerHTML=html;
-  const vacation=days.filter(x=>!x.deleted&&x.date.startsWith(viewMonth)).length,left=remainingDays(s);
-  document.getElementById('fund-summary').innerHTML=`<div class="fund-counts"><div><b>${s.wd.length}</b><span>pracovních dní</span></div><div><b>${left}</b><span>zbývá</span></div><div><b>${vacation}</b><span>dní volna</span></div></div><p class="small muted">Dosavadní obrat ${fmtK(s.revenue)} · průběžná výplata ${fmtK(payout(s.revenue,s.pct))}. Fond určuje hranice všech tří pásem.</p>`;
+  const marked=monthDays(viewMonth).filter(d=>!isWeekend(d)&&!isHoliday(d)).map(dayMark).filter(Boolean),vacation=marked.filter(x=>x.kind==='dovolena').length,leave=marked.filter(x=>x.kind==='volno').length,left=remainingDays(s);
+  document.getElementById('fund-summary').innerHTML=`<div class="fund-counts"><div><b>${s.wd.length}</b><span>pracovních dní</span></div><div><b>${left}</b><span>zbývá</span></div><div><b>${vacation}</b><span>dovolená</span></div><div><b>${leave}</b><span>volno</span></div></div><p class="small muted">Měsíční cíl 100 %: ${fmtK(s.target)} · průběžná výplata ${fmtK(payout(s.revenue,s.pct))}. Dovolená cíl snižuje, volno zachovává.</p>`;
   renderTierBoard('fund-tier-board',s);
 }
 
@@ -923,18 +981,20 @@ async function cloudForgot(){const email=document.getElementById('cl-email').val
   if(error){cloudStatus('Odeslání selhalo: '+error.message,'err');return}cloudStatus('Odkaz pro nové heslo odeslán na '+email+'. Otevři ho a zadej nové heslo.','warn')}
 async function handleRecovery(){const np=prompt('Zadej nové heslo (min. 6 znaků):');if(!np)return;const {error}=await sb.auth.updateUser({password:np});if(error){cloudStatus('Heslo se nepodařilo změnit: '+error.message,'err')}else{toast('Heslo změněno, jsi přihlášená');cloudStatus()}}
 async function cloudLogout(){if(sb){await sb.auth.signOut()}sbUser=null;cloudStatus();renderLoginHint();toast('Odhlášeno')}
-async function pushPending(){if(!sb||!sbUser||!pending.length||!navigator.onLine)return;const batch=[...pending];try{
+let pendingPush=null;
+function pushPending(){if(pendingPush)return pendingPush;pendingPush=flushPending().finally(()=>{pendingPush=null});return pendingPush}
+async function flushPending(){while(sb&&sbUser&&pending.length&&navigator.onLine){const batch=[...pending];try{
   const byT={};for(const p of batch)(byT[p.table]=byT[p.table]||[]).push(p.row);
   if(byT.orders){const rows=dedupe(byT.orders).map(r=>({id:r.id,user_id:sbUser.id,date:r.date,ico:r.ico||null,amount:r.amount,note:r.note||null,deleted:!!r.deleted,updated_at:r.updated_at}));const {error}=await sb.from('orders').upsert(rows);if(error)throw error}
   if(byT.day_marks){const rows=dedupe(byT.day_marks).map(r=>({id:r.id,user_id:sbUser.id,date:r.date,kind:r.kind,deleted:!!r.deleted,updated_at:r.updated_at}));const {error}=await sb.from('day_marks').upsert(rows);if(error)throw error}
   if(byT.settings){const last=byT.settings[byT.settings.length-1];const {error}=await sb.from('settings').upsert({user_id:sbUser.id,data:last.data,updated_at:last.updated_at});if(error)throw error}
-  pending=pending.filter(p=>!batch.includes(p));save(LS.pending,pending);cloudStatus()}catch(e){cloudStatus('Odeslání do cloudu selhalo: '+e.message,'err')}}
+  pending=pending.filter(p=>!batch.includes(p));save(LS.pending,pending);cloudStatus()}catch(e){cloudStatus('Odeslání do cloudu selhalo: '+e.message,'err');return}}}
 function dedupe(rows){const m={};for(const r of rows)m[r.id]=r;return Object.values(m)}
 async function pullAll(){if(!sb||!sbUser)return;const since=localStorage.getItem(LS.lastPull)||'1970-01-01';const now=new Date().toISOString();
   const o=await sb.from('orders').select('*').gt('updated_at',since);if(o.error)throw o.error;
   for(const r of o.data){const ex=orders.find(x=>x.id===r.id);const row={id:r.id,date:r.date,ico:r.ico||'',amount:Number(r.amount),note:r.note||'',deleted:!!r.deleted,updated_at:r.updated_at};if(!ex)orders.push(row);else if(r.updated_at>ex.updated_at&&!pending.some(p=>p.row.id===r.id))Object.assign(ex,row)}
   const d=await sb.from('day_marks').select('*').gt('updated_at',since);if(d.error)throw d.error;
-  for(const r of d.data){const ex=days.find(x=>x.id===r.id);const row={id:r.id,date:r.date,kind:r.kind,deleted:!!r.deleted,updated_at:r.updated_at};if(!ex)days.push(row);else if(r.updated_at>ex.updated_at)Object.assign(ex,row)}
+  for(const r of d.data){const ex=days.find(x=>x.id===r.id);const row={id:r.id,date:r.date,kind:r.kind,deleted:!!r.deleted,updated_at:r.updated_at};if(!ex)days.push(row);else if(r.updated_at>ex.updated_at&&!pending.some(p=>p.table==='day_marks'&&p.row.id===r.id))Object.assign(ex,row)}
   const s=await sb.from('settings').select('*').eq('user_id',sbUser.id).maybeSingle();if(s.data&&(!settings.updated_at||s.data.updated_at>settings.updated_at))settings=Object.assign({},DEF_SETTINGS,s.data.data);
   localStorage.setItem(LS.lastPull,now);persist();render()}
 async function syncAll(manual){if(!sb||!sbUser){if(manual)toast('Nejsi přihlášen do cloudu');return}try{await pushPending();await pullAll();cloudStatus();if(manual)toast('Synchronizováno')}catch(e){cloudStatus('Synchronizace selhala: '+e.message,'err')}}
