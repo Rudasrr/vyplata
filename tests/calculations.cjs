@@ -27,3 +27,10 @@ console.log('PASS: fund, daily budget stability, vacation/leave cycle, nonworkin
  assert.equal(vm.runInContext('pending.length',sync),0);
  console.log('PASS: serialized cloud queue keeps the newest calendar state (mocked service)');
 })().catch(e=>{console.error(e);process.exitCode=1});
+
+vm.runInContext(part('function paceStats','function renderOverviewMonth'),ctx);
+run("days=[];orders=[{date:'2026-09-21',amount:35000}]");
+assert.equal(run("paceStats(monthStats('2026-09')).required"),133000/6);
+assert.equal(run("paceStats(monthStats('2026-09')).estimate"),58625);
+assert.ok(run("payoutMarkup(monthStats('2026-09')).includes('40')"));
+console.log('PASS: forward daily pace and payout projection');

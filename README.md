@@ -15,3 +15,7 @@ Statická aplikace nasazovaná z `main` na GitHub Pages. Data zůstávají loká
 ## Ověření
 
 `node tests/calculations.cjs` ověřuje fond, stabilitu denního rozpočtu, cyklus kalendáře a pořadí synchronizace s izolovanou náhradou cloudové služby. Nemění produkční data.
+
+## Výplata a motivace
+
+Měsíční přehled porovnává fix a provizi aktuálně i přesně na hranicích 100 % a 136 %. Srovnání tempa dělí zbývající obrat pracovními dny až po dnešku; dnešní výkon je průběžný. Motivační odhad počítá se zopakováním dnešního obratu každý další pracovní den a příslušnou provizí z výsledného měsíčního obratu. Nejde o garantovanou výplatu.
